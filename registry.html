@@ -3,20 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <title>Реестр КСО и Маппинг - Аверс Технолоджи</title>
-    <script type="text/javascript" src="https://gc.kis.v2.scr.kaspersky-labs.com/FD126C42-EBFA-4E12-B309-BB3FDD723AC1/main.js?attr=z1ZwcG0mdsCJGCWXPfOnuEbV34INDmkQM074vEbuHmELxBzSMz39hUbBomY4byxXwhYDfXL0TyOwf-2851u_6AM28IfN6P_mMAF4RyMM82YFgzIlSl4zs0g0kVV_mzmtPQM6o3RB4Eq-9SCg7vvk90ZcZOF0pbJAT_cZM7bS1yPgMrinBubRr2XgjKC_D174yn9bOX7hSiwmgg4aRCWYqi8ubGp_ZblUxU2STqwrMMzLYTo53WGKA3WTOx3UM3XlsNDWW3mKnAkGVSdpWQlEueazdT6Kj9M6dRo89NUDHicifwOZE0Lxb7eokrxoWBJS" charset="UTF-8"></script><style>
+    <style>
 * { box-sizing: border-box; }
 body { font-family: Arial, sans-serif; background-color: #f4f6f9; color: #333333; margin: 0; padding: 0; font-size: 12px; }
 .wrapper { display: flex; min-height: 100vh; }
-
-/* Стили модальных окон */
-.modal-overlay { 
-    display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
-    background: rgba(0,0,0,0.5); z-index: 1000; justify-content: center; align-items: center; 
-}
-.modal-content { 
-    background: #ffffff; padding: 20px; border: 1px solid #cccccc; width: 80%; max-width: 700px; 
-    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-}
 
 /* Боковое меню */
 .sidebar { 
@@ -62,40 +52,18 @@ body { font-family: Arial, sans-serif; background-color: #f4f6f9; color: #333333
 .btn-red:hover { background-color: #c92a36; }
 .btn-blue { background-color: #457b9d; color: #ffffff; border-color: #1d3557; }
 .btn-blue:hover { background-color: #386685; }
-.btn-green { background-color: #2ea043; color: #ffffff; border-color: #238636; }
-.btn-green:hover { background-color: #248235; }
 
-.update-box { background-color: #edf2f7; border: 1px solid #cbd5e0; border-left: 4px solid #457b9d; margin: 15px; padding: 15px; }
-.badge { display: inline-block; background-color: #ffffff; border: 1px solid #b0bec5; padding: 5px 10px; margin-right: 10px; font-weight: bold; }
-.badge span { color: #e63946; }
-
-.table-container { padding: 15px; flex-grow: 1; background: #ffffff; }
+.table-container { padding: 15px; flex-grow: 1; background: #ffffff; overflow-x: auto; }
 .grid-table { width: 100%; border-collapse: collapse; border: 1px solid #cccccc; background-color: #ffffff; }
 .grid-table th { background-color: #f8fafc; border: 1px solid #cccccc; padding: 8px; text-align: left; font-weight: bold; color: #1d3557; }
 .grid-table td { border: 1px solid #cccccc; padding: 8px; vertical-align: top; }
 
-.menu-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 15px; padding: 15px; }
-.menu-card { background: #ffffff; border: 1px solid #cccccc; border-radius: 3px; padding: 10px; position: relative; }
-.menu-card-img { height: 90px; background: #eaedf1; display: flex; align-items: center; justify-content: center; font-size: 24px; margin-bottom: 8px; color: #78909c; border: 1px dashed #b0bec5; }
-.menu-card-title { font-weight: bold; font-size: 13px; margin-bottom: 5px; color: #0d2240; }
-.menu-card-meta { font-size: 11px; color: #666666; margin-bottom: 4px; }
+.row-warn { background-color: #fffaf0; }
+.row-offline { background-color: #f7fafc; color: #718096; }
 
-.two-col-layout { display: flex; gap: 20px; padding: 15px; }
-.layout-col { flex: 1; background: #ffffff; border: 1px solid #cccccc; padding: 15px; }
-.col-title { font-size: 13px; font-weight: bold; color: #1d3557; margin-bottom: 15px; border-bottom: 1px solid #e0e0e0; padding-bottom: 5px; }
-.form-group { margin-bottom: 12px; }
-.form-group label { display: block; font-weight: bold; margin-bottom: 4px; }
-
-.bg-grey { background-color: #eaedf1; }
-.bg-red { background-color: #ff4d4d !important; color: #ffffff !important; }
-.bg-red td { color: #ffffff !important; }
 .text-error { color: #e63946; font-weight: bold; }
 .text-success { color: #2ea043; font-weight: bold; }
 .text-warn { color: #d69e2e; font-weight: bold; }
-
-.api-block { background: #2d3748; color: #a0aec0; font-family: Courier, monospace; padding: 10px; border-radius: 3px; margin-bottom: 10px; font-size: 11px; }
-.api-method { color: #38a169; font-weight: bold; margin-right: 5px; }
-.api-path { color: #e2e8f0; }
 </style>
 </head>
 <body>
@@ -125,7 +93,7 @@ body { font-family: Arial, sans-serif; background-color: #f4f6f9; color: #333333
             <div class="filter-section">
                 <div class="filter-grid">
                     <div class="filter-cell"><label>Объект (Организация)</label><input type="text" class="input-field" value="[ Все объекты ]"></div>
-                    <div class="filter-cell"><label>Группа</label><input type="text" class="input-field" value="#Новый КСО"></div>
+                    <div class="filter-cell"><label>Группа</label><input type="text" class="input-field" value="[ Все группы ]"></div>
                     <button class="btn btn-red" style="padding: 6px 25px;">Фильтровать</button>
                 </div>
             </div>
@@ -137,12 +105,288 @@ body { font-family: Arial, sans-serif; background-color: #f4f6f9; color: #333333
                 <div style="font-weight: bold; margin-bottom: 10px; color:#1d3557;">Связывание логических областей: Терминал &rarr; Группа &rarr; Объект</div>
                 <table class="grid-table">
                     <thead>
-                        <tr><th>Системный ID</th><th>Идентификатор хоста (UUID)</th><th>Сетевое имя терминала</th><th>Логическая Группа</th><th>Объект (Организация)</th><th>Синхронизация данных</th></tr>
+                        <tr>
+                            <th>Системный ID</th>
+                            <th>Идентификатор хоста (UUID)</th>
+                            <th>Сетевое имя терминала</th>
+                            <th>Логическая Группа</th>
+                            <th>Объект (Организация)</th>
+                            <th>Синхронизация данных</th>
+                        </tr>
                     </thead>
                     <tbody>
-                        <tr><td><b>33</b></td><td>31b516cd-2aac-40df-8edb-6d380cb1dbc6</td><td>117 ЕвроХим КСО :EVX10</td><td><span class="text-warn">#Новый КСО</span></td><td>IFCM TECH</td><td><span class="text-success">В сети</span></td></tr>
-                        <tr><td><b>43</b></td><td>e160bdce-c338-4610-87e4-283c8f5b336f</td><td>176 ЕвроХим КСО 2 :EVX11</td><td><span class="text-error">#КритическийОтказ</span></td><td>ЕвроХим Магазин 2</td><td><span class="text-error">Ошибка синхронизации</span></td></tr>
-                        <tr><td><b>34</b></td><td>a01b923d-4cba-4e92-bc12-f01234bc5671</td><td>GAZ1</td><td><span>#Фронт #GAZ</span></td><td>Газпромнефть</td><td><span class="text-success">Синхронизировано</span></td></tr>
+                        <tr>
+                            <td><b>33</b></td>
+                            <td>31b516cd-2aac-400f-8e0b-6d380cb1dbc6</td>
+                            <td>117 ЕвроХим КСО :EVX10</td>
+                            <td><span class="text-warn">#Новый КСО</span></td>
+                            <td>IFCM TECH</td>
+                            <td><span class="text-success">В сети</span></td>
+                        </tr>
+                        <tr class="row-offline">
+                            <td><b>26</b></td>
+                            <td>d8674162-c99a-4bf5-a5e9-c545a7c26c94</td>
+                            <td>196 Норникель НМЗ №16 КАССА №2 :NRK4</td>
+                            <td><span>#Фронт</span></td>
+                            <td>Норникель / IFCM TECH</td>
+                            <td><span>Не в сети (с 09.04.2026)</span></td>
+                        </tr>
+                        <tr>
+                            <td><b>17</b></td>
+                            <td>8a085bb1-b1dd-4f58-a4de-e044b4ddf138</td>
+                            <td>219 Ванкор ВПУ ОБП Касса Самообслуживания :VNK49</td>
+                            <td><span>#Самообслуживание фаст фуд</span></td>
+                            <td>Ванкор / IFCM TECH</td>
+                            <td><span class="text-success">В сети</span></td>
+                        </tr>
+                        <tr>
+                            <td><b>8</b></td>
+                            <td>baa19935-d8f1-48ae-ad70-77615d61cf82</td>
+                            <td>239 Ванкор ВПУ ОБП Холодильник на доверии :VNK50</td>
+                            <td><span>#Холодильник на доверии; #спецпитание</span></td>
+                            <td>Ванкор / IFCM TECH</td>
+                            <td><span class="text-success">В сети</span></td>
+                        </tr>
+                        <tr>
+                            <td><b>14</b></td>
+                            <td>fb71a8df-70aa-4068-a33a-7f69dc880cac</td>
+                            <td>265 Марс Спб КСО</td>
+                            <td><span>#Умная касса</span></td>
+                            <td>Марс / IFCM TECH</td>
+                            <td><span class="text-success">В сети</span></td>
+                        </tr>
+                        <tr class="row-offline">
+                            <td><b>16</b></td>
+                            <td>20e06083-a8be-468d-87f0-8b6bfdde6a0e</td>
+                            <td>268 Норникель Кафетерий №14 :NRK16</td>
+                            <td><span>#Разработка</span></td>
+                            <td>Норникель / IFCM TECH</td>
+                            <td><span>Не в сети (с 09.12.2025)</span></td>
+                        </tr>
+                        <tr>
+                            <td><b>4</b></td>
+                            <td>0035942f-1682-4dbb-b5c3-8c12f092e73c</td>
+                            <td>273 Ванкор ВПУ ОБП Касса Самообслуживания 2 :VNK52</td>
+                            <td><span>#Самообслуживание фаст фуд; #лимиты</span></td>
+                            <td>Ванкор / IFCM TECH</td>
+                            <td><span class="text-success">В сети</span></td>
+                        </tr>
+                        <tr>
+                            <td><b>11</b></td>
+                            <td>b627569c-d681-4951-add8-197f82b70dee</td>
+                            <td>274 Ванкор ВПУ ВЖК Магазин Самообслуживания :VNK53</td>
+                            <td><span>#Самообслуживание ритейл</span></td>
+                            <td>Ванкор / IFCM TECH</td>
+                            <td><span class="text-success">В сети</span></td>
+                        </tr>
+                        <tr>
+                            <td><b>3</b></td>
+                            <td>a598aa80-7ee3-4d43-9eaf-3299821b7b19</td>
+                            <td>275 Ванкор ВПУ ОБП Магазин Самообслуживания :VNK54</td>
+                            <td><span>#Самообслуживание ритейл</span></td>
+                            <td>Ванкор / IFCM TECH</td>
+                            <td><span class="text-success">В сети</span></td>
+                        </tr>
+                        <tr>
+                            <td><b>34</b></td>
+                            <td>738604d3-9096-48f5-9269-28d7a3d6293e</td>
+                            <td>275 Ванкор ВПУ ОБП Магазин Самообслуживания :VNK54</td>
+                            <td><span class="text-warn">#Новый КСО</span></td>
+                            <td>IFCM TECH</td>
+                            <td><span class="text-success">В сети</span></td>
+                        </tr>
+                        <tr class="row-offline">
+                            <td><b>13</b></td>
+                            <td>64c33a2a-5baf-4369-ab96-585eba856816</td>
+                            <td>276 Мондэлис КСО :MON2</td>
+                            <td><span>#Самообслуживание фаст фуд</span></td>
+                            <td>Монделиз / IFCM TECH</td>
+                            <td><span>Не в сети (с 03.05.2026)</span></td>
+                        </tr>
+                        <tr class="row-offline">
+                            <td><b>31</b></td>
+                            <td>d0a227b5-07e6-4c92-ab0f-8c2dadc521b2</td>
+                            <td>276 Мондэлис КСО :MON2</td>
+                            <td><span>#Самообслуживание ритейл</span></td>
+                            <td>Монделиз / IFCM TECH</td>
+                            <td><span>Не в сети (с 04.03.2026)</span></td>
+                        </tr>
+                        <tr>
+                            <td><b>9</b></td>
+                            <td>435a6bd0-8385-4f38-96e3-7f7150d838fb</td>
+                            <td>277 ВСНК Магазин ЖБК КСО :VSNG9</td>
+                            <td><span>#Самообслуживание ритейл</span></td>
+                            <td>ВСНК / IFCM TECH</td>
+                            <td><span class="text-success">В сети</span></td>
+                        </tr>
+                        <tr>
+                            <td><b>0</b></td>
+                            <td>9a86446b-f620-4780-8ee1-957ee81ac68c</td>
+                            <td>279 Автобан Касса2 :AVT2</td>
+                            <td><span>#Холодильник на доверии</span></td>
+                            <td>Автобан / IFCM TECH</td>
+                            <td><span class="text-success">В сети</span></td>
+                        </tr>
+                        <tr class="row-offline">
+                            <td><b>6</b></td>
+                            <td>b2674fc3-ca8a-4376-b059-c06f04090edc</td>
+                            <td>282 Фармасинтез Касса Самообслуживания 1 :FMZ3</td>
+                            <td><span>#Самообслуживание фаст фуд</span></td>
+                            <td>Фармасинтез / IFCM TECH</td>
+                            <td><span>Не в сети (с 12.12.2025)</span></td>
+                        </tr>
+                        <tr>
+                            <td><b>10</b></td>
+                            <td>aabc5a0e-1610-40fe-b3ea-962cd5e052a8</td>
+                            <td>283 Фармасинтез Касса Самообслуживания 2 :FMZ4</td>
+                            <td><span>#Самообслуживание фаст фуд</span></td>
+                            <td>Фармасинтез / IFCM TECH</td>
+                            <td><span class="text-success">В сети</span></td>
+                        </tr>
+                        <tr class="row-warn">
+                            <td><b>37</b></td>
+                            <td>c6a57a54-7a3e-42b7-bf29-c4a3cc222650</td>
+                            <td>283 Фармасинтез Касса Самообслуживания 2 :FMZ4</td>
+                            <td><span class="text-warn">#Новый КСО</span></td>
+                            <td>IFCM TECH</td>
+                            <td><span class="text-warn">Предупреждение (17.03)</span></td>
+                        </tr>
+                        <tr>
+                            <td><b>7</b></td>
+                            <td>95130ef6-67f5-4a80-bbd8-64402f98efa7</td>
+                            <td>284 Фармасинтез Холодильник на доверии :FMZ5</td>
+                            <td><span>#Холодильник на доверии</span></td>
+                            <td>Фармасинтез / IFCM TECH</td>
+                            <td><span class="text-success">В сети</span></td>
+                        </tr>
+                        <tr>
+                            <td><b>15</b></td>
+                            <td>2326ca87-22e1-439b-bab1-d25476faf116</td>
+                            <td>291 ВСНК Столовая ЖБК КСО Касса 3 :VSNG10</td>
+                            <td><span>#Самообслуживание фаст фуд</span></td>
+                            <td>ВСНК / IFCM TECH</td>
+                            <td><span class="text-success">В сети</span></td>
+                        </tr>
+                        <tr>
+                            <td><b>4720</b></td>
+                            <td>1dde8e6f-5475-4460-8384-1f6bad215fde</td>
+                            <td>292 ВСНК Столовая ЖБК КСО Касса 4 :VSNG11</td>
+                            <td><span>#Самообслуживание фаст фуд</span></td>
+                            <td>ВСНК / IFCM TECH</td>
+                            <td><span class="text-success">В сети</span></td>
+                        </tr>
+                        <tr>
+                            <td><b>4728</b></td>
+                            <td>fd8ce144-6ab8-430d-99a3-8cb1f83b74b6</td>
+                            <td>293 ВСНК Столовая ЖБК КСО Касса 5 :VSNG12</td>
+                            <td><span>#Самообслуживание фаст фуд</span></td>
+                            <td>ВСНК / IFCM TECH</td>
+                            <td><span class="text-success">В сети</span></td>
+                        </tr>
+                        <tr>
+                            <td><b>50</b></td>
+                            <td>27a444c9-76f5-4374-9953-75f9af5faf59</td>
+                            <td>294 Ванкор ВПУ ОБП Касса Самообслуживания 3 :VNK56</td>
+                            <td><span>#Самообслуживание фаст фуд</span></td>
+                            <td>Ванкор / IFCM TECH</td>
+                            <td><span class="text-success">В сети</span></td>
+                        </tr>
+                        <tr>
+                            <td><b>49</b></td>
+                            <td>21cd2e53-1f6d-4eca-9c42-dfc52ca143c2</td>
+                            <td>295 Ванкор ВПУ ОБП Касса Самообслуживания 4 :VNK57</td>
+                            <td><span>#Самообслуживание фаст фуд</span></td>
+                            <td>Ванкор / IFCM TECH</td>
+                            <td><span class="text-success">В сети</span></td>
+                        </tr>
+                        <tr class="row-warn">
+                            <td><b>18</b></td>
+                            <td>513868e3-7b32-4215-9b1c-9ca641a38542</td>
+                            <td>296 Барилла КСО :BRL</td>
+                            <td><span>#Самообслуживание фаст фуд</span></td>
+                            <td>Барилла / IFCM TECH</td>
+                            <td><span class="text-warn">Предупреждение</span></td>
+                        </tr>
+                        <tr>
+                            <td><b>20</b></td>
+                            <td>f07e26f9-b09d-40d6-9b9d-1e997c5934bd</td>
+                            <td>299 Нягань РН-Нягань Касса Самообслуживания :RNN5</td>
+                            <td><span>#Самообслуживание фаст фуд</span></td>
+                            <td>РН-Няганьнефтегаз / IFCM TECH</td>
+                            <td><span class="text-success">В сети</span></td>
+                        </tr>
+                        <tr class="row-offline">
+                            <td><b>21</b></td>
+                            <td>50836c1b-016b-43d3-869e-b7636f96eb32</td>
+                            <td>302 Ванкор ВПУ КЭМП Касса Самообслуживания 1:VNK58</td>
+                            <td><span>#Самообслуживание фаст фуд</span></td>
+                            <td>Ванкор / IFCM TECH</td>
+                            <td><span>Не в сети (с 22.03.2026)</span></td>
+                        </tr>
+                        <tr>
+                            <td><b>22</b></td>
+                            <td>89fc7fef-85a2-4fad-8fed-4ba178932491</td>
+                            <td>303 Ванкор ВПУ КЭМП Касса Самообслуживания 2:VNK59</td>
+                            <td><span>#Самообслуживание фаст фуд</span></td>
+                            <td>Ванкор / IFCM TECH</td>
+                            <td><span class="text-success">В сети</span></td>
+                        </tr>
+                        <tr class="row-offline">
+                            <td><b>23</b></td>
+                            <td>a2eb75d7-296d-4e13-9df2-362db19f0c5a</td>
+                            <td>304 Ванкор ВПУ КЭМП Касса Самообслуживания3 :VNK60</td>
+                            <td><span>#Самообслуживание фаст фуд</span></td>
+                            <td>Ванкор / IFCM TECH</td>
+                            <td><span>Не в сети (с 04.03.2026)</span></td>
+                        </tr>
+                        <tr>
+                            <td><b>36</b></td>
+                            <td>c8f34550-4a27-4afd-816d-9e630c4966cc</td>
+                            <td>304 Ванкор ВПУ КЭМП Касса Самообслуживания3 :VNK60</td>
+                            <td><span class="text-warn">#Новый КСО</span></td>
+                            <td>IFCM TECH</td>
+                            <td><span class="text-success">В сети</span></td>
+                        </tr>
+                        <tr>
+                            <td><b>24</b></td>
+                            <td>dbc2bc72-6a16-42c5-afca-1ff974bbb543</td>
+                            <td>305 Ванкор ВПУ КЭМП Касса Самообслуживания4 :VNK61</td>
+                            <td><span>#Самообслуживание фаст фуд</span></td>
+                            <td>Ванкор / IFCM TECH</td>
+                            <td><span class="text-success">В сети</span></td>
+                        </tr>
+                        <tr class="row-offline">
+                            <td><b>25</b></td>
+                            <td>a03be2ce-7986-4c8d-a823-ef923753d147</td>
+                            <td>306 Ванкор ВПУ КЭМП Касса Самообслуживания5 :VNK62</td>
+                            <td><span>#Самообслуживание фаст фуд</span></td>
+                            <td>Ванкор / IFCM TECH</td>
+                            <td><span>Не в сети (с 04.03.2026)</span></td>
+                        </tr>
+                        <tr>
+                            <td><b>35</b></td>
+                            <td>ca68c581-4d14-469a-a4d7-ed5505692569</td>
+                            <td>306 Ванкор ВПУ КЭМП Касса Самообслуживания5 :VNK62</td>
+                            <td><span class="text-warn">#Новый КСО</span></td>
+                            <td>IFCM TECH</td>
+                            <td><span class="text-success">В сети</span></td>
+                        </tr>
+                        <tr class="row-offline">
+                            <td><b>28</b></td>
+                            <td>47cd10f5-8e6c-4816-b7d3-f7e2caa1df01</td>
+                            <td>309 Новатэк МСК Самообслуживания 1 :NVKM3</td>
+                            <td><span>#Самообслуживание фаст фуд</span></td>
+                            <td>Новатэк / IFCM TECH</td>
+                            <td><span>Не в сети (с 08.05.2026)</span></td>
+                        </tr>
+                        <tr class="row-offline">
+                            <td><b>29</b></td>
+                            <td>860a316b-0b33-4544-908c-1e10e407fc0b</td>
+                            <td>310 Новатэк МСК Самообслуживания 2 :NVKM4</td>
+                            <td><span>#Самообслуживание фаст фуд</span></td>
+                            <td>Новатэк / IFCM TECH</td>
+                            <td><span>Не в сети (с 08.05.2026)</span></td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
@@ -156,7 +400,6 @@ body { font-family: Arial, sans-serif; background-color: #f4f6f9; color: #333333
         localStorage.setItem('sidebarCollapsed', sidebar.classList.contains('collapsed'));
     }
     
-    // Восстановление состояния сайдбара при загрузке страницы
     document.addEventListener("DOMContentLoaded", function() {
         var isCollapsed = localStorage.getItem('sidebarCollapsed') === 'true';
         var sidebar = document.getElementById('sidebarMenu');
@@ -164,14 +407,6 @@ body { font-family: Arial, sans-serif; background-color: #f4f6f9; color: #333333
             sidebar.classList.add('collapsed');
         }
     });
-
-    function openModal(modalId) {
-        document.getElementById(modalId).style.display = 'flex';
-    }
-    function closeModal(modalId) {
-        document.getElementById(modalId).style.display = 'none';
-    }
 </script>
-
 </body>
 </html>
