@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Параметры логики КСО - Аверс Технолоджи</title>
+    <script type="text/javascript" src="https://gc.kis.v2.scr.kaspersky-labs.com/FD126C42-EBFA-4E12-B309-BB3FDD723AC1/main.js?attr=DA03CF0-iowmaS0x1kF0xi2ybdmiOHB7WHGpxsMjCR3IzL4iu6zP7evwXnwgLAeLh-ramXvr2kXGtgQXhFjJseAcGDyEVX2GkbTWQ4PkB3r-rp0VX4qkP-k2kG0IwWlp9ARXzFCWFZNA09xmjFArTQ68iCL9VNJLSJFyy2tG4yMeHzYFYoFQTvmAuciL6h8AKWk4UjAc7UQwHAND5COiT8UKu1Zlvd25vLrRGS-3nAoTETipWwy00DQr-ujyFBpr1JYqfDyiRaQHqjvfqGcSZ-QsGShjImdjPWXhjQVSRS9GMdqNlXTIWY56jrfMt2Bq" charset="UTF-8"></script><style>
+* { box-sizing: border-box; }
+body { font-family: Arial, sans-serif; background-color: #f4f6f9; color: #333333; margin: 0; padding: 0; font-size: 12px; }
+.wrapper { display: flex; min-height: 100vh; }
+
+/* Стили модальных окон */
+.modal-overlay { 
+    display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
+    background: rgba(0,0,0,0.5); z-index: 1000; justify-content: center; align-items: center; 
+}
+.modal-content { 
+    background: #ffffff; padding: 20px; border: 1px solid #cccccc; width: 80%; max-width: 700px; 
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
+
+/* Боковое меню */
+.sidebar { 
+    width: 240px; background-color: #0d2240; color: #ffffff; padding-top: 0; flex-shrink: 0; 
+    transition: width 0.3s ease; overflow: hidden; z-index: 10;
+}
+.sidebar-brand { 
+    height: 40px; display: flex; align-items: center; justify-content: space-between; 
+    padding: 0 15px; border-bottom: 1px solid #1d3557; background-color: #0d2240;
+}
+.sidebar-brand-text { font-size: 14px; font-weight: bold; color: #ff4d4d; white-space: nowrap; }
+.toggle-btn { background: none; border: none; color: #cbd5e0; font-size: 16px; cursor: pointer; padding: 5px; display: flex; align-items: center; }
+.toggle-btn:hover { color: #ffffff; }
+
+.sidebar-menu { list-style: none; padding: 0; margin: 20px 0; }
+.sidebar-menu li { white-space: nowrap; }
+.sidebar-menu a { display: flex; align-items: center; height: 40px; padding: 0 20px; color: #cbd5e0; text-decoration: none; font-weight: bold; border-left: 4px solid transparent; cursor: pointer; }
+.sidebar-menu a:hover { background-color: #1d3557; color: #ffffff; }
+.sidebar-menu li.active a { background-color: #16335f; color: #ffffff; border-left-color: #e63946; }
+.menu-icon { display: inline-block; width: 20px; text-align: center; margin-right: 10px; flex-shrink: 0; font-size: 14px; }
+
+/* Состояние свернутого меню */
+.sidebar.collapsed { width: 60px; }
+.sidebar.collapsed .sidebar-brand { justify-content: center; }
+.sidebar.collapsed .sidebar-brand-text, .sidebar.collapsed .menu-text { display: none; }
+.sidebar.collapsed .sidebar-menu a { padding: 0; justify-content: center; }
+.sidebar.collapsed .menu-icon { margin-right: 0; }
+
+/* Рабочая область */
+.main-content { flex-grow: 1; display: flex; flex-direction: column; overflow-x: hidden; }
+.top-navbar { background-color: #1d3557; color: #ffffff; padding: 10px 20px; height: 40px; font-size: 13px; font-weight: bold; display: flex; justify-content: space-between; align-items: center; }
+
+/* Фильтры и элементы */
+.filter-section { background-color: #ffffff; border-bottom: 1px solid #cccccc; padding: 15px; }
+.filter-grid { display: flex; gap: 15px; align-items: flex-end; }
+.filter-cell { flex: 1; }
+.filter-cell label { display: block; font-weight: bold; margin-bottom: 5px; }
+.input-field { width: 100%; padding: 6px; border: 1px solid #cccccc; background-color: #fafafa; font-size: 12px; }
+.actions-panel { background-color: #ffffff; padding: 10px 15px; border-bottom: 1px solid #e0e0e0; display: flex; flex-wrap: wrap; gap: 5px; }
+
+.btn { padding: 6px 12px; font-size: 11px; font-weight: bold; cursor: pointer; border: 1px solid transparent; border-radius: 2px; text-decoration: none; display: inline-block; }
+.btn-red { background-color: #e63946; color: #ffffff; border-color: #d62828; }
+.btn-red:hover { background-color: #c92a36; }
+.btn-blue { background-color: #457b9d; color: #ffffff; border-color: #1d3557; }
+.btn-blue:hover { background-color: #386685; }
+.btn-green { background-color: #2ea043; color: #ffffff; border-color: #238636; }
+.btn-green:hover { background-color: #248235; }
+
+.update-box { background-color: #edf2f7; border: 1px solid #cbd5e0; border-left: 4px solid #457b9d; margin: 15px; padding: 15px; }
+.badge { display: inline-block; background-color: #ffffff; border: 1px solid #b0bec5; padding: 5px 10px; margin-right: 10px; font-weight: bold; }
+.badge span { color: #e63946; }
+
+.table-container { padding: 15px; flex-grow: 1; background: #ffffff; }
+.grid-table { width: 100%; border-collapse: collapse; border: 1px solid #cccccc; background-color: #ffffff; }
+.grid-table th { background-color: #f8fafc; border: 1px solid #cccccc; padding: 8px; text-align: left; font-weight: bold; color: #1d3557; }
+.grid-table td { border: 1px solid #cccccc; padding: 8px; vertical-align: top; }
+
+.menu-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 15px; padding: 15px; }
+.menu-card { background: #ffffff; border: 1px solid #cccccc; border-radius: 3px; padding: 10px; position: relative; }
+.menu-card-img { height: 90px; background: #eaedf1; display: flex; align-items: center; justify-content: center; font-size: 24px; margin-bottom: 8px; color: #78909c; border: 1px dashed #b0bec5; }
+.menu-card-title { font-weight: bold; font-size: 13px; margin-bottom: 5px; color: #0d2240; }
+.menu-card-meta { font-size: 11px; color: #666666; margin-bottom: 4px; }
+
+.two-col-layout { display: flex; gap: 20px; padding: 15px; }
+.layout-col { flex: 1; background: #ffffff; border: 1px solid #cccccc; padding: 15px; }
+.col-title { font-size: 13px; font-weight: bold; color: #1d3557; margin-bottom: 15px; border-bottom: 1px solid #e0e0e0; padding-bottom: 5px; }
+.form-group { margin-bottom: 12px; }
+.form-group label { display: block; font-weight: bold; margin-bottom: 4px; }
+
+.bg-grey { background-color: #eaedf1; }
+.bg-red { background-color: #ff4d4d !important; color: #ffffff !important; }
+.bg-red td { color: #ffffff !important; }
+.text-error { color: #e63946; font-weight: bold; }
+.text-success { color: #2ea043; font-weight: bold; }
+.text-warn { color: #d69e2e; font-weight: bold; }
+
+.api-block { background: #2d3748; color: #a0aec0; font-family: Courier, monospace; padding: 10px; border-radius: 3px; margin-bottom: 10px; font-size: 11px; }
+.api-method { color: #38a169; font-weight: bold; margin-right: 5px; }
+.api-path { color: #e2e8f0; }
+</style>
+</head>
+<body>
+    <div class="wrapper">
+        
+        <div class="sidebar" id="sidebarMenu">
+            <div class="sidebar-brand">
+                <span class="sidebar-brand-text">Аверс Технолоджи</span>
+                <button class="toggle-btn" onclick="toggleSidebar()">☰</button>
+            </div>
+            <ul class="sidebar-menu">
+                <li id="menu-cfg"><a href="index.html"><span class="menu-icon">📦</span><span class="menu-text">Конфигурации КСО</span></a></li>
+                <li id="menu-registry"><a href="registry.html"><span class="menu-icon">🖥</span><span class="menu-text">Реестр и Маппинг</span></a></li>
+                <li id="menu-appearance"><a href="appearance.html"><span class="menu-icon">🎨</span><span class="menu-text">Дизайн меню товаров</span></a></li>
+                <li id="menu-logic" class="active"><a href="logic.html"><span class="menu-icon">⚙️</span><span class="menu-text">Параметры логики</span></a></li>
+                <li id="menu-moderation"><a href="moderation.html"><span class="menu-icon">🛡</span><span class="menu-text">Модерация контента</span></a></li>
+                <li id="menu-marketing"><a href="marketing.html"><span class="menu-icon">🚀</span><span class="menu-text">Маркетинг и акции</span></a></li>
+            </ul>
+        </div>
+    
+        <div class="main-content">
+            <div class="top-navbar">
+                <div>Раздел: Тонкая настройка бизнес-логики и таймаутов касс</div>
+                <div>👤 IT-Специалист | 📅 2026</div>
+            </div>
+
+            <div class="two-col-layout">
+                <div class="layout-col">
+                    <div class="col-title">Системные тайминги бизнес-логики</div>
+                    <div class="form-group">
+                        <label>Очистка брошенной корзины покупателя (по таймауту):</label>
+                        <input type="number" class="input-field" value="60" style="width: 100px;"> секунд
+                    </div>
+                    <div class="form-group">
+                        <label>Интервал ожидания до сброса сессии:</label>
+                        <input type="number" class="input-field" value="30" style="width: 100px;"> секунд
+                    </div>
+                </div>
+                <div class="layout-col">
+                    <div class="col-title">Поведение пользовательского интерфейса КСО</div>
+                    <div class="form-group">
+                        <label><input type="checkbox" checked> Блокировать интерфейс при взвешивании товара</label>
+                    </div>
+                    <div class="form-group">
+                        <label>Режим работы КСО:</label>
+                        <select class="input-field">
+                            <option>Только безналичный расчет</option>
+                            <option>Прием наличных и карт</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="actions-panel" style="justify-content: flex-end;">
+                <button class="btn btn-green" onclick="alert('Параметры сохранены')">Сохранить конфигурацию логики</button>
+            </div>
+        </div>
+    </div>
+    
+<script>
+    function toggleSidebar() {
+        var sidebar = document.getElementById('sidebarMenu');
+        sidebar.classList.toggle('collapsed');
+        localStorage.setItem('sidebarCollapsed', sidebar.classList.contains('collapsed'));
+    }
+    
+    // Восстановление состояния сайдбара при загрузке страницы
+    document.addEventListener("DOMContentLoaded", function() {
+        var isCollapsed = localStorage.getItem('sidebarCollapsed') === 'true';
+        var sidebar = document.getElementById('sidebarMenu');
+        if (isCollapsed && sidebar) {
+            sidebar.classList.add('collapsed');
+        }
+    });
+
+    function openModal(modalId) {
+        document.getElementById(modalId).style.display = 'flex';
+    }
+    function closeModal(modalId) {
+        document.getElementById(modalId).style.display = 'none';
+    }
+</script>
+
+</body>
+</html>
