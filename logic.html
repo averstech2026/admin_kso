@@ -82,6 +82,13 @@ body { font-family: Arial, sans-serif; background-color: #f4f6f9; color: #333333
 .grid-table td { border: 1px solid #cccccc; padding: 8px; vertical-align: middle; }
 .grid-table tr:hover { background-color: #f1f5f9; }
 
+/* Логи и события */
+.api-block { background: #2d3748; color: #a0aec0; font-family: Courier, monospace; padding: 12px; border-radius: 3px; margin-bottom: 5px; font-size: 11px; line-height: 1.5; }
+.api-time { color: #cbd5e0; margin-right: 10px; font-weight: bold; }
+.api-success { color: #38a169; font-weight: bold; }
+.api-error { color: #e63946; font-weight: bold; }
+.api-warn { color: #e2e8f0; font-weight: bold; }
+
 /* Интерактивные ссылки и бейджи */
 .link-preset { color: #457b9d; text-decoration: none; font-weight: bold; cursor: pointer; }
 .link-preset:hover { text-decoration: underline; color: #1d3557; }
@@ -247,6 +254,17 @@ body { font-family: Arial, sans-serif; background-color: #f4f6f9; color: #333333
                 </div>
             </div>
 
+            <!-- НОВЫЙ БЛОК: Последние события / Логи раскатки -->
+            <div class="full-width-section">
+                <div class="col-title">Последние события (История обновлений бизнес-логики)</div>
+                <div class="api-block">
+                    <div><span class="api-time">[28.05.2026 14:10:22]</span> <span class="api-success">[Успешно]</span> Конфигурация "Стандартный Безнал (Дефолт)" синхронизирована на 42 терминалах группы GAZ.</div>
+                    <div><span class="api-time">[28.05.2026 13:45:10]</span> <span class="api-success">[Успешно]</span> КСО GAZ-009 переведен в "Демо-режим / Витрина" (Инициатор: Сидоров К.М.).</div>
+                    <div><span class="api-time">[28.05.2026 11:12:05]</span> <span class="api-error">[Ошибка связи]</span> Обновление пресета на КСО NRK-044 отклонено хостом: таймаут ответа оборудования (касса оффлайн).</div>
+                    <div><span class="api-time">[27.05.2026 16:30:00]</span> <span class="api-warn">[Репликация]</span> Создан новый пресет "Расширенный режим (Наличные + Лояльность)" пользователем Петров А.В.</div>
+                </div>
+            </div>
+
         </div>
     </div>
 
@@ -351,7 +369,6 @@ body { font-family: Arial, sans-serif; background-color: #f4f6f9; color: #333333
         });
     }
 
-    // Открытие модального окна просмотра
     function viewPreset(presetId) {
         var data = presetsData[presetId];
         if (!data) return;
@@ -359,7 +376,7 @@ body { font-family: Arial, sans-serif; background-color: #f4f6f9; color: #333333
         document.getElementById('modalPresetName').innerText = 'Конфигурация: ' + data.name;
         
         var tbody = document.getElementById('modalParamsBody');
-        tbody.innerHTML = ''; // очистка
+        tbody.innerHTML = '';
         
         data.params.forEach(function(p) {
             var tr = document.createElement('tr');
