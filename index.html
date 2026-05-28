@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Конфигурации КСО - Аверс Технолоджи</title>
-    <script type="text/javascript" src="https://gc.kis.v2.scr.kaspersky-labs.com/FD126C42-EBFA-4E12-B309-BB3FDD723AC1/main.js?attr=R5R0Q9b3mAUMHmi93omG10F3jeqKhu51OX3ML7x-ANowjmuCZ4bR03zhuseoNc6zDPYBrpvl80EmlJHBN-krx3iLNSK6pIJjdDcXI427OsfZiDxeS_yeR-h9KwyJbOwo0uXbAxfbhjcdix0cWs9NJ9F8_gfOOp30xfoJrAby9ns8-g4gR8RezLu8Tjs5Tfc0dLACu8hS9E_1g8U8zyx6FFjBwpxdVo3V6IVurYqiv87waseW0W8MSZcolNYORMK-Bo-3VgqkgODNmlRtyFd2pbbC84qkUghPZaFhY-5tPmSlAVKVv8SQNSYjVHmek8af" charset="UTF-8"></script><style>
+    <style>
 * { box-sizing: border-box; }
 body { font-family: Arial, sans-serif; background-color: #f4f6f9; color: #333333; margin: 0; padding: 0; font-size: 12px; }
 .wrapper { display: flex; min-height: 100vh; }
@@ -14,9 +14,17 @@ body { font-family: Arial, sans-serif; background-color: #f4f6f9; color: #333333
     background: rgba(0,0,0,0.5); z-index: 1000; justify-content: center; align-items: center; 
 }
 .modal-content { 
-    background: #ffffff; padding: 20px; border: 1px solid #cccccc; width: 80%; max-width: 700px; 
-    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    background: #ffffff; padding: 20px; border: 1px solid #cccccc; width: 90%; max-width: 850px; 
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3); max-height: 90vh; overflow-y: auto;
 }
+
+/* Табы внутри модального окна создания */
+.modal-tabs { display: flex; flex-wrap: wrap; border-bottom: 1px solid #cccccc; margin-bottom: 15px; background: #fafafa; }
+.tab-link { padding: 8px 12px; cursor: pointer; border: 1px solid transparent; border-bottom: none; background: none; font-size: 11px; font-weight: bold; color: #457b9d; }
+.tab-link:hover { background: #edf2f7; }
+.tab-link.active { background: #ffffff; border-color: #cccccc #cccccc transparent #cccccc; color: #0d2240; position: relative; top: 1px; }
+.tab-content { display: none; }
+.tab-content.active { display: block; }
 
 /* Боковое меню */
 .sidebar { 
@@ -64,38 +72,37 @@ body { font-family: Arial, sans-serif; background-color: #f4f6f9; color: #333333
 .btn-blue:hover { background-color: #386685; }
 .btn-green { background-color: #2ea043; color: #ffffff; border-color: #238636; }
 .btn-green:hover { background-color: #248235; }
+.btn-xs { padding: 3px 6px; font-size: 10px; }
 
-.update-box { background-color: #edf2f7; border: 1px solid #cbd5e0; border-left: 4px solid #457b9d; margin: 15px; padding: 15px; }
-.badge { display: inline-block; background-color: #ffffff; border: 1px solid #b0bec5; padding: 5px 10px; margin-right: 10px; font-weight: bold; }
-.badge span { color: #e63946; }
+/* Информационная панель-справка */
+.info-notice { background-color: #fff9db; border: 1px solid #f59f00; border-left: 4px solid #f59f00; margin: 15px 15px 0 15px; padding: 10px 15px; display: flex; align-items: center; gap: 10px; }
 
 .table-container { padding: 15px; flex-grow: 1; background: #ffffff; }
 .grid-table { width: 100%; border-collapse: collapse; border: 1px solid #cccccc; background-color: #ffffff; }
 .grid-table th { background-color: #f8fafc; border: 1px solid #cccccc; padding: 8px; text-align: left; font-weight: bold; color: #1d3557; }
-.grid-table td { border: 1px solid #cccccc; padding: 8px; vertical-align: top; }
+.grid-table td { border: 1px solid #cccccc; padding: 8px; vertical-align: middle; }
 
-.menu-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 15px; padding: 15px; }
-.menu-card { background: #ffffff; border: 1px solid #cccccc; border-radius: 3px; padding: 10px; position: relative; }
-.menu-card-img { height: 90px; background: #eaedf1; display: flex; align-items: center; justify-content: center; font-size: 24px; margin-bottom: 8px; color: #78909c; border: 1px dashed #b0bec5; }
-.menu-card-title { font-weight: bold; font-size: 13px; margin-bottom: 5px; color: #0d2240; }
-.menu-card-meta { font-size: 11px; color: #666666; margin-bottom: 4px; }
+/* Стилизация конфигурационных тегов */
+.cfg-tag { display: inline-block; padding: 2px 6px; font-size: 10px; font-weight: bold; border-radius: 3px; margin: 2px; border: 1px solid transparent; }
+.tag-success { background-color: #e6fffa; color: #006d5b; border-color: #b2f5ea; }
+.tag-danger { background-color: #fff5f5; color: #9b2c2c; border-color: #fed7d7; }
+.tag-neutral { background-color: #edf2f7; color: #2d3748; border-color: #e2e8f0; }
 
-.two-col-layout { display: flex; gap: 20px; padding: 15px; }
-.layout-col { flex: 1; background: #ffffff; border: 1px solid #cccccc; padding: 15px; }
-.col-title { font-size: 13px; font-weight: bold; color: #1d3557; margin-bottom: 15px; border-bottom: 1px solid #e0e0e0; padding-bottom: 5px; }
-.form-group { margin-bottom: 12px; }
-.form-group label { display: block; font-weight: bold; margin-bottom: 4px; }
+.form-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; padding: 5px 0; }
+.form-group { margin-bottom: 10px; }
+.form-group label { display: block; font-weight: bold; margin-bottom: 4px; color: #1d3557; }
+.form-group-checkbox { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; padding-top: 15px; }
+.form-group-checkbox label { font-weight: bold; color: #1d3557; margin: 0; cursor: pointer; }
 
-.bg-grey { background-color: #eaedf1; }
-.bg-red { background-color: #ff4d4d !important; color: #ffffff !important; }
-.bg-red td { color: #ffffff !important; }
-.text-error { color: #e63946; font-weight: bold; }
+.bg-grey { background-color: #f8fafc; }
+.bg-warn { background-color: #fff5f5 !important; }
 .text-success { color: #2ea043; font-weight: bold; }
-.text-warn { color: #d69e2e; font-weight: bold; }
+.text-muted { color: #718096; font-size: 11px; }
 
-.api-block { background: #2d3748; color: #a0aec0; font-family: Courier, monospace; padding: 10px; border-radius: 3px; margin-bottom: 10px; font-size: 11px; }
-.api-method { color: #38a169; font-weight: bold; margin-right: 5px; }
-.api-path { color: #e2e8f0; }
+.days-select { display: flex; gap: 6px; }
+.day-checkbox { display: none; }
+.day-label { padding: 4px 8px; border: 1px solid #cccccc; background: #fafafa; cursor: pointer; font-weight: bold; border-radius: 2px; }
+.day-checkbox:checked + .day-label { background: #457b9d; color: #fff; border-color: #1d3557; }
 </style>
 </head>
 <body>
@@ -118,57 +125,423 @@ body { font-family: Arial, sans-serif; background-color: #f4f6f9; color: #333333
     
         <div class="main-content">
             <div class="top-navbar">
-                <div>Раздел: Управление конфигурационными файлами КСО</div>
+                <div>Раздел: Управление и раскатка конфигурационных файлов КСО по областям действия</div>
                 <div>👤 IT-Специалист | 📅 2026</div>
             </div>
 
             <div class="filter-section">
                 <div class="filter-grid">
                     <div class="filter-cell">
-                        <label>Тип конфигурационного файла</label>
-                        <input type="text" class="input-field" value="[ Все файлы: json, xml, ini ]">
+                        <label>Фильтр по названию файла / Тегу параметров</label>
+                        <input type="text" class="input-field" placeholder="Введите имя файла или свойство, например: DUET...">
                     </div>
                     <div class="filter-cell">
-                        <label>Версия ядра</label>
-                        <input type="text" class="input-field" value="v2.45.0">
+                        <label>Целевой хост / Группа КСО</label>
+                        <input type="text" class="input-field" placeholder="Все группы">
                     </div>
-                    <button class="btn btn-red" style="padding: 6px 25px;">Поиск</button>
+                    <button class="btn btn-red" style="padding: 6px 25px;">Применить фильтр</button>
                 </div>
             </div>
             
             <div class="actions-panel">
-                <button class="btn btn-red" onclick="alert('Создание шаблона конфигурации')">+ Создать эталонную конфигурацию</button>
-                <button class="btn btn-blue" onclick="openModal('modal-version')">Журнал версий и аудит</button>
+                <button class="btn btn-red" onclick="openModal('modal-create-config')">+ Создать новую конфигурацию</button>
+                <button class="btn btn-blue" onclick="openModal('modal-version')">Журнал версий и аудит изменений</button>
             </div>
-            
-            <div class="update-box">
-                <div style="font-weight: bold; margin-bottom: 5px; color: #1d3557;">Активная эталонная сборка для массового распространения:</div>
-                <div class="badge">📄 core_config.json ➔ <span>v2.45.0</span></div>
-                <div class="badge">⚙️ UI_skin_default.xml ➔ <span>v1.12.2</span></div>
-                <button class="btn btn-green" style="float: right;" onclick="alert('Конфигурация отправлена на кассы')">⚡ Применить к выбранным группам КСО</button>
-                <div style="clear: both;"></div>
+
+            <div class="info-notice">
+                <span style="font-size: 16px;">💡</span>
+                <div>
+                    <b>Как работает раскатка:</b> Выберите нужную конфигурацию в таблице ниже, проверьте ключевые параметры по цветным тегам и нажмите кнопку <b>«Раскатить на целевые КСО»</b> в правой колонке. Файл запишется на КСО/хосты, указанные в столбце «Область действия».
+                </div>
             </div>
             
             <div class="table-container">
+                <h3 style="color: #1d3557; margin: 0 0 10px 0; border-bottom: 1px solid #e2e8f0; padding-bottom: 5px;">Доступные конфигурации и управление раскаткой</h3>
                 <table class="grid-table">
                     <thead>
                         <tr>
-                            <th style="width: 30px;"><input type="checkbox" checked></th>
-                            <th>Имя конфигурации</th>
-                            <th>Версия</th>
-                            <th>Тип оборудования</th>
-                            <th>Группа КСО (Область действия)</th>
-                            <th>Дата изменения</th>
-                            <th>Статус</th>
+                            <th style="width: 220px;">Название файла конфигурации</th>
+                            <th style="width: 70px;">Версия</th>
+                            <th>Ключевые функциональные параметры (Свойства сборки)</th>
+                            <th style="width: 250px;">Область действия (Группы / Хосты)</th>
+                            <th style="width: 140px;">Дата изменения</th>
+                            <th style="width: 130px; text-align: center;">Действие</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr><td><input type="checkbox" checked></td><td><b>prod_retail_default.json</b></td><td><span class="text-success">v2.45.0</span></td><td>КСО-Фронт Тип 1</td><td>Все кассы самообслуживания</td><td>26.05.2026 14:00</td><td><span class="text-success">Эталонная</span></td></tr>
-                        <tr class="bg-grey"><td><input type="checkbox" checked></td><td><b>test_checkout_fast.json</b></td><td><span>v1.12.2</span></td><td>КСО-Мини Тач</td><td>Группа #ТестоваяГруппа</td><td>25.05.2026 18:11</td><td><span>Тестирование</span></td></tr>
-                        <tr class="bg-red"><td><input type="checkbox" checked></td><td><b>legacy_config_critical.json</b></td><td><span style="text-decoration: underline;">v1.10.1</span> ⚠️</td><td>КСО-Фронт Тип 1</td><td>Терминал 176 ЕвроХим КСО 2</td><td>10.04.2025 09:30</td><td><b>[УСТАРЕЛО]: Требует обновления ядра</b></td></tr>
+                        <tr>
+                            <td>
+                                <b>prod_retail_default.json</b><br>
+                                <span class="text-muted">Основной рабочий шаблон розницы</span>
+                            </td>
+                            <td><span class="text-success">v2.45.0</span></td>
+                            <td>
+                                <span class="cfg-tag tag-success">✔ Печать чека: Да</span>
+                                <span class="cfg-tag tag-success">✔ Оплата DUET: Да</span>
+                                <span class="cfg-tag tag-success">✔ Проверка ЧЗ: Да</span>
+                                <span class="cfg-tag tag-neutral">Процессинг: Вкл</span>
+                                <span class="cfg-tag tag-neutral">18+: Верификация</span>
+                            </td>
+                            <td>
+                                <span style="font-weight: bold; color: #1d3557;">Группа: [Все кассы самообслуживания]</span><br>
+                                <span class="text-muted">Массовое распространение (весь контур)</span>
+                            </td>
+                            <td>26.05.2026 14:00</td>
+                            <td style="text-align: center;">
+                                <button class="btn btn-green btn-xs" onclick="deployConfig('prod_retail_default.json', 'Все кассы самообслуживания')">⚡ Раскатить на КСО</button>
+                            </td>
+                        </tr>
+                        
+                        <tr class="bg-grey">
+                            <td>
+                                <b>test_checkout_fast.json</b><br>
+                                <span class="text-muted">Тестовая экспресс-конфигурация</span>
+                            </td>
+                            <td><span>v1.12.2</span></td>
+                            <td>
+                                <span class="cfg-tag tag-danger">❌ Печать чека: Нет (Электронный)</span>
+                                <span class="cfg-tag tag-danger">❌ Оплата DUET: Нет</span>
+                                <span class="cfg-tag tag-success">✔ Проверка ЧЗ: Да</span>
+                                <span class="cfg-tag tag-neutral">Таймаут: 60с</span>
+                                <span class="cfg-tag tag-success">✔ Тест-оплата: Да</span>
+                            </td>
+                            <td>
+                                <span style="font-weight: bold; color: #457b9d;">Группа: [#ТестоваяГруппа_Эксперимент]</span><br>
+                                <span class="text-muted">Хосты: КСО-Тест-01, КСО-Тест-02</span>
+                            </td>
+                            <td>25.05.2026 18:11</td>
+                            <td style="text-align: center;">
+                                <button class="btn btn-green btn-xs" onclick="deployConfig('test_checkout_fast.json', '#ТестоваяГруппа_Эксперимент')">⚡ Раскатить на КСО</button>
+                            </td>
+                        </tr>
+                        
+                        <tr class="bg-warn">
+                            <td>
+                                <b>legacy_config_critical.json</b><br>
+                                <span style="color: #c53030; font-weight: bold;">⚠️ Legacy сборка (Локальная)</span>
+                            </td>
+                            <td><span style="text-decoration: underline;">v1.10.1</span></td>
+                            <td>
+                                <span class="cfg-tag tag-success">✔ Печать чека: Да</span>
+                                <span class="cfg-tag tag-danger">❌ Оплата DUET: Нет</span>
+                                <span class="cfg-tag tag-danger">❌ Проверка ЧЗ: Выкл</span>
+                                <span class="cfg-tag tag-neutral">Старая версия ядра</span>
+                            </td>
+                            <td>
+                                <span style="font-weight: bold; color: #e63946;">Отдельный хост: [Терминал-176-ЕвроХим]</span><br>
+                                <span class="text-muted">IP: 192.168.4.176 (КСО тип 2)</span>
+                            </td>
+                            <td>10.04.2025 09:30</td>
+                            <td style="text-align: center;">
+                                <button class="btn btn-red btn-xs" onclick="deployConfig('legacy_config_critical.json', 'Терминал-176-ЕвроХим')">⚡ Экстренная раскатка</button>
+                            </td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
+        </div>
+    </div>
+
+    <div id="modal-create-config" class="modal-overlay">
+        <div class="modal-content" style="max-width: 900px;">
+            <h3 style="color: #1d3557; margin-top: 0; border-bottom: 2px solid #e63946; padding-bottom: 8px;">Создание новой конфигурации КСО</h3>
+            
+            <div class="modal-tabs">
+                <button class="tab-link active" onclick="switchTab(event, 'tab-main')">Основные</button>
+                <button class="tab-link" onclick="switchTab(event, 'tab-goods')">Товары и Вес</button>
+                <button class="tab-link" onclick="switchTab(event, 'tab-payment')">Оплата</button>
+                <button class="tab-link" onclick="switchTab(event, 'tab-hours')">Часы работы</button>
+                <button class="tab-link" onclick="switchTab(event, 'tab-processing')">Процессинг</button>
+                <button class="tab-link" onclick="switchTab(event, 'tab-display')">Отображение</button>
+                <button class="tab-link" onclick="switchTab(event, 'tab-catalog')">Каталог</button>
+                <button class="tab-link" onclick="switchTab(event, 'tab-special')">Спец. питание</button>
+                <button class="tab-link" onclick="switchTab(event, 'tab-recognition')">Распознавание</button>
+                <button class="tab-link" onclick="switchTab(event, 'tab-server')">Параметры сервера</button>
+                <button class="tab-link" onclick="switchTab(event, 'tab-admin')">Админ / ЧЗ</button>
+                <button class="tab-link" onclick="switchTab(event, 'tab-production')">Собств. производство</button>
+                <button class="tab-link" onclick="switchTab(event, 'tab-front-duet')">Фронт / DUET / Звук</button>
+            </div>
+
+            <form id="configForm" onsubmit="saveNewConfig(event)">
+                
+                <div id="tab-main" class="tab-content active">
+                    <div class="form-grid">
+                        <div class="form-group"><label>Станция</label><input type="text" class="input-field" placeholder="Например, Станция 01"></div>
+                        <div class="form-group"><label>Строка подключения</label><input type="text" class="input-field" placeholder="Data Source=..."></div>
+                        <div class="form-group"><label>Стол</label><input type="text" class="input-field" placeholder="ID стола"></div>
+                        <div class="form-group"><label>Стол (вынос)</label><input type="text" class="input-field" placeholder="ID стола для выноса"></div>
+                        <div class="form-group"><label>Прайс-лист</label><input type="text" class="input-field" placeholder="ID прайс-листа"></div>
+                        <div class="form-group"><label>Пользователь обслужил</label><input type="text" class="input-field" placeholder="Имя / ID сотрудника"></div>
+                        <div class="form-group"><label>Клиент по умолчанию</label><input type="text" class="input-field" placeholder="Код карты по умолчанию"></div>
+                        <div class="form-group-checkbox"><input type="checkbox" id="cfg_enabled" checked><label for="cfg_enabled">Включен</label></div>
+                    </div>
+                </div>
+
+                <div id="tab-goods" class="tab-content">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>Группы товаров</label>
+                            <select class="input-field" multiple style="height: 60px;">
+                                <option value="1">Выпечка и хлеб</option>
+                                <option value="2">Напитки горячие</option>
+                                <option value="3">Напитки холодные</option>
+                                <option value="4">Готовые блюда</option>
+                                <option value="5">Кондитерские изделия</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Исключить товары (ItemExclude)</label>
+                            <input type="text" class="input-field" placeholder="Артикулы через запятую">
+                        </div>
+                        <div class="form-group"><label>Товар для использования, как пакет в корзине</label><input type="text" class="input-field" placeholder="Артикул пакета"></div>
+                        <div class="form-group"><label>Группа товаров для комплексного обеда</label><input type="text" class="input-field" placeholder="ID группы"></div>
+                        <div class="form-group"><label>Единицы измерения (весовые)</label><input type="text" class="input-field" value="5, 7"></div>
+                        <div class="form-group"><label>Весовые единицы в килограммах</label><input type="text" class="input-field" value="5"></div>
+                        <div class="form-group"><label>Единицы измерения, допускающие полпорции</label><input type="text" class="input-field" placeholder="Коды единиц"></div>
+                    </div>
+                    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 10px;">
+                        <div class="form-group-checkbox"><input type="checkbox" id="all_groups"><label for="all_groups">Все группы товаров</label></div>
+                        <div class="form-group-checkbox"><input type="checkbox" id="only_kso_groups"><label for="only_kso_groups">Только группы из КСО</label></div>
+                        <div class="form-group-checkbox"><input type="checkbox" id="all_barcode_goods" checked><label for="all_barcode_goods">Все товары для сканера ШК</label></div>
+                        <div class="form-group-checkbox"><input type="checkbox" id="no_show_barcode_catalog"><label for="no_show_barcode_catalog">Не отражать товары с ШК в каталоге</label></div>
+                        <div class="form-group-checkbox"><input type="checkbox" id="no_show_marked_no_barcode"><label for="no_show_marked_no_barcode">Не отражать маркиров. товары без ШК</label></div>
+                        <div class="form-group-checkbox"><input type="checkbox" id="confirm_marks_18"><label for="confirm_marks_18">Подтверждать марки при оплате (18+)</label></div>
+                        <div class="form-group-checkbox"><input type="checkbox" id="open_catalog_complex"><label for="open_catalog_complex">Открывать каталог с компл. обеда</label></div>
+                        <div class="form-group-checkbox"><input type="checkbox" id="take_unit"><label for="take_unit">Брать единицу измерения</label></div>
+                        <div class="form-group-checkbox"><input type="checkbox" id="manual_weight"><label for="manual_weight">Ввод веса товара вручную</label></div>
+                        <div class="form-group-checkbox"><input type="checkbox" id="show_weight_catalog" checked><label for="show_weight_catalog">Показывать весовые в каталоге</label></div>
+                    </div>
+                </div>
+
+                <div id="tab-payment" class="tab-content">
+                    <div class="form-grid">
+                        <div class="form-group"><label>Валюта</label><input type="text" class="input-field" value="RUB"></div>
+                        <div class="form-group"><label>Возможность оплаты заказа</label><input type="text" class="input-field" placeholder="Типы (Карта, СБП...)"></div>
+                        <div class="form-group"><label>Основной платеж</label><input type="text" class="input-field" placeholder="Код основного платежа"></div>
+                        <div class="form-group"><label>Платеж баланса</label><input type="text" class="input-field" placeholder="Код платежа баланса"></div>
+                    </div>
+                    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-top: 10px;">
+                        <div class="form-group-checkbox"><input type="checkbox" id="pay_balance"><label for="pay_balance">Возможность оплаты балансом</label></div>
+                        <div class="form-group-checkbox"><input type="checkbox" id="test_payment"><label for="test_payment">Тестовая оплата</label></div>
+                        <div class="form-group-checkbox"><input type="checkbox" id="select_balance_sum"><label for="select_balance_sum">Выбор суммы оплаты балансом</label></div>
+                        <div class="form-group-checkbox"><input type="checkbox" id="use_dobavka"><label for="use_dobavka">Использовать Dobavka</label></div>
+                    </div>
+                </div>
+
+                <div id="tab-hours" class="tab-content">
+                    <div class="form-group">
+                        <label>Рабочие дни недели</label>
+                        <div class="days-select">
+                            <input type="checkbox" id="day_пн" class="day-checkbox" checked><label for="day_пн" class="day-label">Пн</label>
+                            <input type="checkbox" id="day_вт" class="day-checkbox" checked><label for="day_вт" class="day-label">Вт</label>
+                            <input type="checkbox" id="day_ср" class="day-checkbox" checked><label for="day_ср" class="day-label">Ср</label>
+                            <input type="checkbox" id="day_чт" class="day-checkbox" checked><label for="day_чт" class="day-label">Чт</label>
+                            <input type="checkbox" id="day_пт" class="day-checkbox" checked><label for="day_пт" class="day-label">Пт</label>
+                            <input type="checkbox" id="day_сб" class="day-checkbox"><label for="day_сб" class="day-label">Сб</label>
+                            <input type="checkbox" id="day_вс" class="day-checkbox"><label for="day_вс" class="day-label">Вс</label>
+                        </div>
+                    </div>
+                    <div class="form-grid">
+                        <div class="form-group"><label>Время начала работы</label><input type="time" class="input-field" value="08:00"></div>
+                        <div class="form-group"><label>Время окончания работы</label><input type="time" class="input-field" value="22:00"></div>
+                        <div class="form-group" style="grid-column: span 2;"><label>Исключить рабочие часы</label><input type="text" class="input-field" placeholder="Например: 14:00-14:30"></div>
+                    </div>
+                </div>
+
+                <div id="tab-processing" class="tab-content">
+                    <div style="font-weight: bold; color: #1d3557; margin-bottom: 8px;">Настройки процессинга</div>
+                    <div class="form-grid">
+                        <div class="form-group"><label>Адрес сервера процессинга</label><input type="text" class="input-field" placeholder="http://..."></div>
+                        <div class="form-group"><label>Логин</label><input type="text" class="input-field"></div>
+                        <div class="form-group"><label>Пароль</label><input type="password" class="input-field"></div>
+                        <div class="form-group"><label>Код оплаты</label><input type="text" class="input-field"></div>
+                        <div class="form-group"><label>Группы клиентов</label><input type="text" class="input-field" placeholder="ID групп через запятую"></div>
+                        <div class="form-group"><label>Платеж автосписания</label><input type="text" class="input-field"></div>
+                    </div>
+                    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-top: 10px;">
+                        <div class="form-group-checkbox"><input type="checkbox" id="balance_proc"><label for="balance_proc">Получение балансов через процессинг</label></div>
+                        <div class="form-group-checkbox"><input type="checkbox" id="use_proc" checked><label for="use_proc">Использовать процессинг</label></div>
+                        <div class="form-group-checkbox"><input type="checkbox" id="use_pay_limits"><label for="use_pay_limits">Использовать лимиты на оплату</label></div>
+                        <div class="form-group-checkbox"><input type="checkbox" id="use_item_limits"><label for="use_item_limits">Использовать лимиты на товары</label></div>
+                    </div>
+                </div>
+
+                <div id="tab-display" class="tab-content">
+                    <div class="form-grid">
+                        <div class="form-group"><label>Файл логотипа</label><input type="text" class="input-field" placeholder="logo.png"></div>
+                        <div class="form-group"><label>Строка для QR-кода на стартовом экране</label><input type="text" class="input-field" placeholder="https://..."></div>
+                        <div class="form-group"><label>Время отображения окна завершения сеанса (сек)</label><input type="number" class="input-field" value="5"></div>
+                        <div class="form-group"><label>Время отображения оценки обслуживания (сек)</label><input type="number" class="input-field" value="5"></div>
+                    </div>
+                    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-top: 10px;">
+                        <div class="form-group-checkbox"><input type="checkbox" id="anim_elem" checked><label for="anim_elem">Анимация элементов</label></div>
+                        <div class="form-group-checkbox"><input type="checkbox" id="anim_win" checked><label for="anim_win">Анимация окон</label></div>
+                        <div class="form-group-checkbox"><input type="checkbox" id="show_btn_no_shk" checked><label for="show_btn_no_shk">Кнопка товаров без ШК в корзине</label></div>
+                        <div class="form-group-checkbox"><input type="checkbox" id="show_btn_weight" checked><label for="show_btn_weight">Кнопка весовых товаров в корзине</label></div>
+                        <div class="form-group-checkbox"><input type="checkbox" id="show_order_num" checked><label for="show_order_num">Показ номера заказа при успешной оплате</label></div>
+                        <div class="form-group-checkbox"><input type="checkbox" id="show_client_balance" checked><label for="show_client_balance">Показывать баланс клиента</label></div>
+                        <div class="form-group-checkbox"><input type="checkbox" id="confirm_start_pay"><label for="confirm_start_pay">Окно подтверждения начала оплаты (карта сотрудника)</label></div>
+                        <div class="form-group-checkbox"><input type="checkbox" id="show_scan_staff"><label for="show_scan_staff">Надпись "Отсканируйте карту сотрудника"</label></div>
+                        <div class="form-group-checkbox"><input type="checkbox" id="show_quality_rating"><label for="show_quality_rating">Оценка качества обслуживания после оплаты</label></div>
+                    </div>
+                </div>
+
+                <div id="tab-catalog" class="tab-content">
+                    <div class="form-grid">
+                        <div class="form-group"><label>Кол-во столбцов в каталоге</label><input type="number" class="input-field" value="4"></div>
+                        <div class="form-group"><label>Кол-во строк в каталоге</label><input type="number" class="input-field" value="3"></div>
+                        <div class="form-group">
+                            <label>Принудительная ориентация экрана</label>
+                            <select class="input-field">
+                                <option value="default">Не задано</option>
+                                <option value="portrait">Портретная (Vertical)</option>
+                                <option value="landscape">Альбомная (Horizontal)</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-top: 10px;">
+                        <div class="form-group-checkbox"><input type="checkbox" id="scroll_v1"><label for="scroll_v1">Прокрутка групп в каталоге v1 как в ЛК</label></div>
+                        <div class="form-group-checkbox"><input type="checkbox" id="anim_catalog" checked><label for="anim_catalog">Анимация появления товаров в каталоге</label></div>
+                        <div class="form-group-checkbox"><input type="checkbox" id="start_from_catalog"><label for="start_from_catalog">Запуск сеанса с каталога, а не с корзины</label></div>
+                        <div class="form-group-checkbox"><input type="checkbox" id="show_imgs_catalog" checked><label for="show_imgs_catalog">Отображать картинки товаров в каталоге</label></div>
+                        <div class="form-group-checkbox"><input type="checkbox" id="view_info_catalog"><label for="view_info_catalog">Просмотр информации о товаре в каталоге</label></div>
+                        <div class="form-group-checkbox"><input type="checkbox" id="uppercase_names"><label for="uppercase_names">Названия в верхнем регистре</label></div>
+                        <div class="form-group-checkbox"><input type="checkbox" id="sort_by_sales"><label for="sort_by_sales">Упорядочивание блюд по продажам за смену</label></div>
+                    </div>
+                </div>
+
+                <div id="tab-special" class="tab-content">
+                    <div class="form-grid">
+                        <div class="form-group" style="grid-column: span 2;">
+                            <label>Спец питание (молоко)</label>
+                            <textarea class="input-field" style="height: 50px;">96400001&#10;96400002</textarea>
+                        </div>
+                        <div class="form-group"><label>Адрес процессинга спец. питания</label><input type="text" class="input-field"></div>
+                        <div class="form-group"><label>Логин</label><input type="text" class="input-field"></div>
+                        <div class="form-group"><label>Пароль</label><input type="password" class="input-field"></div>
+                        <div class="form-group"><label>Кол-во товаров в добавляемой порции</label><input type="number" class="input-field" value="1"></div>
+                    </div>
+                    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-top: 10px;">
+                        <div class="form-group-checkbox"><input type="checkbox" id="show_spec_basket"><label for="show_spec_basket">Отображение кнопок спец питания в корзине</label></div>
+                        <div class="form-group-checkbox"><input type="checkbox" id="use_proc_spec"><label for="use_proc_spec">Использовать процессинг для списания спец питания</label></div>
+                    </div>
+                </div>
+
+                <div id="tab-recognition" class="tab-content">
+                    <div class="form-grid">
+                        <div class="form-group"><label>Задержка ручного распознавания подноса (мс)</label><input type="number" class="input-field" value="500"></div>
+                        <div class="form-group"><label>Адрес сервера распознавания</label><input type="text" class="input-field" placeholder="http://recognition-server/api"></div>
+                        <div class="form-group"><label>Адрес локального сервера получения блюд</label><input type="text" class="input-field" value="127.0.0.1"></div>
+                        <div class="form-group"><label>Порт локального сервера</label><input type="number" class="input-field" value="8080"></div>
+                        <div class="form-group"><label>Интервал обновления меню (в минутах)</label><input type="number" class="input-field" value="15"></div>
+                        <div class="form-group"><label>Порог распознавания для зеленого</label><input type="text" class="input-field" value="0.85"></div>
+                        <div class="form-group"><label>Порог распознавания для оранжевого</label><input type="text" class="input-field" value="0.60"></div>
+                    </div>
+                    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 10px;">
+                        <div class="form-group-checkbox"><input type="checkbox" id="rec_dish"><label for="rec_dish">Распознавание блюд</label></div>
+                        <div class="form-group-checkbox"><input type="checkbox" id="test_rec"><label for="test_rec">Тестовое распознавание</label></div>
+                        <div class="form-group-checkbox"><input type="checkbox" id="confirm_rec_change"><label for="confirm_rec_change">Подтверждение при изменении</label></div>
+                    </div>
+                </div>
+
+                <div id="tab-server" class="tab-content">
+                    <div class="form-grid">
+                        <div class="form-group"><label>Дата конфига</label><input type="date" class="input-field"></div>
+                        <div class="form-group"><label>Идентификатор</label><input type="text" class="input-field" placeholder="UUID конфигурации"></div>
+                        <div class="form-group"><label>Адрес сервера (портала)</label><input type="text" class="input-field" placeholder="http://portal.avers.tech"></div>
+                        <div class="form-group"><label>Интервал обновления конфига с сервера (сек, 0-нет)</label><input type="number" class="input-field" value="300"></div>
+                        <div class="form-group"><label>Интервал отправки статистики на server (сек, 0-нет)</label><input type="number" class="input-field" value="60"></div>
+                    </div>
+                </div>
+
+                <div id="tab-admin" class="tab-content">
+                    <div style="font-weight: bold; color: #1d3557; margin-bottom: 5px;">Автозакрытие и Сервисные кнопки</div>
+                    <div class="form-grid">
+                        <div class="form-group"><label>Время автозакрытия смены</label><input type="time" class="input-field" value="23:59"></div>
+                        <div class="form-group"><label>Пользователь автозакрытия смены</label><input type="text" class="input-field" value="System_Auto"></div>
+                        <div class="form-group"><label>Запуск файла (кнопка в админке)</label><input type="text" class="input-field" placeholder="C:/scripts/reboot.bat"></div>
+                        <div class="form-group"><label>Текст кнопки</label><input type="text" class="input-field" placeholder="Перезагрузить терминал"></div>
+                        <div class="form-group"><label>Время начала проверки обновления</label><input type="time" class="input-field" value="02:00"></div>
+                        <div class="form-group"><label>Время окончания проверки обновления</label><input type="time" class="input-field" value="04:00"></div>
+                    </div>
+                    <div style="font-weight: bold; color: #1d3557; margin: 10px 0 5px 0; border-top: 1px solid #eee; padding-top: 10px;">Честный знак и ЦС</div>
+                    <div class="form-grid">
+                        <div class="form-group"><label>DocData</label><input type="text" class="input-field"></div>
+                        <div class="form-group"><label>DocNum</label><input type="text" class="input-field"></div>
+                        <div class="form-group"><label>FOIV</label><input type="text" class="input-field"></div>
+                        <div class="form-group-checkbox"><input type="checkbox" id="chz_verify" checked><label for="chz_verify">Проверка марок в ЧЗ</label></div>
+                        <div class="form-group"><label>Адрес центрального сервера (портала)</label><input type="text" class="input-field"></div>
+                        <div class="form-group"><label>Интервал обновления с ЦС (минут, 0-нет)</label><input type="number" class="input-field" value="30"></div>
+                    </div>
+                    <div style="display: flex; gap: 15px; margin-top: 5px;">
+                        <div class="form-group-checkbox"><input type="checkbox" id="upd_img_cs" checked><label for="upd_img_cs">Обновление картинок товаров с ЦС</label></div>
+                        <div class="form-group-checkbox"><input type="checkbox" id="upd_groups_cs" checked><label for="upd_groups_cs">Обновление групп товаров с ЦС</label></div>
+                    </div>
+                </div>
+
+                <div id="tab-production" class="tab-content">
+                    <div class="form-grid">
+                        <div class="form-group" style="grid-column: span 2;">
+                            <label>Товары собственного производства</label>
+                            <textarea class="input-field" style="height: 60px;" placeholder="Перечислите артикулы или ID групп"></textarea>
+                        </div>
+                        <div class="form-group"><label>Время начала скидки</label><input type="time" class="input-field" value="20:00"></div>
+                        <div class="form-group"><label>Время окончания скидки</label><input type="time" class="input-field" value="23:00"></div>
+                    </div>
+                    <div class="form-group-checkbox"><input type="checkbox" id="use_own_prod_discount"><label for="use_own_prod_discount">Использовать скидку на собственное производство</label></div>
+                </div>
+
+                <div id="tab-front-duet" class="tab-content">
+                    <div class="form-grid">
+                        <div class="form-group"><label>Таймаут ввода пароля регистрации (сек)</label><input type="number" class="input-field" value="30"></div>
+                        <div class="form-group"><label>Размер шрифта по умолчанию</label><input type="number" class="input-field" value="12"></div>
+                        <div class="form-group"><label>Время в часах до предупреждения о закрытии смены</label><input type="number" class="input-field" value="2"></div>
+                        <div class="form-group"><label>Интервал чтения сообщения (мс)</label><input type="number" class="input-field" value="100"></div>
+                        <div class="form-group"><label>Адрес сервера DUET</label><input type="text" class="input-field"></div>
+                        <div class="form-group"><label>Клиент DUET</label><input type="text" class="input-field"></div>
+                        <div class="form-group"><label>Группа клиентов для авточека</label><input type="text" class="input-field"></div>
+                        <div class="form-group">
+                            <label>Тип КСО</label>
+                            <select class="input-field">
+                                <option value="1">Тип 1 (Стандартный)</option>
+                                <option value="2">Тип 2 (С группировкой)</option>
+                                <option value="mini">Мини-Тач</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-top: 10px;">
+                        <div class="form-group-checkbox"><input type="checkbox" id="show_tables_info"><label for="show_tables_info">Доп. информация о заказах на группах столов</label></div>
+                        <div class="form-group-checkbox"><input type="checkbox" id="full_name" checked><label for="full_name">Использовать полное название</label></div>
+                        <div class="form-group-checkbox"><input type="checkbox" id="show_prices" checked><label for="show_prices">Показывать цены в меню товаров</label></div>
+                        <div class="form-group-checkbox"><input type="checkbox" id="focus_balance_pay"><label for="focus_balance_pay">Делать фокус на оплату балансовым платежом</label></div>
+                        <div class="form-group-checkbox"><input type="checkbox" id="use_div_print"><label for="use_div_print">Использовать DivisionPrint</label></div>
+                        <div class="form-group-checkbox"><input type="checkbox" id="show_empty_groups"><label for="show_empty_groups">Отображать пустые группы товаров в меню</label></div>
+                        <div class="form-group-checkbox"><input type="checkbox" id="use_predchek"><label for="use_predchek">Использовать предчек</label></div>
+                        <div class="form-group-checkbox"><input type="checkbox" id="search_price_bill"><label for="search_price_bill">Поиск товаров в счете и по цене</label></div>
+                        <div class="form-group-checkbox"><input type="checkbox" id="check_open_tables"><label for="check_open_tables">При закрытии проверять открытые столы только основного зала</label></div>
+                        <div class="form-group-checkbox"><input type="checkbox" id="use_duet"><label for="use_duet">Использовать оплату DUET</label></div>
+                        <div class="form-group-checkbox"><input type="checkbox" id="use_autocheck"><label for="use_autocheck">Использовать авточек</label></div>
+                        <div class="form-group-checkbox"><input type="checkbox" id="sound_success" checked><label for="sound_success">Воспроизводить звук при успешной оплате 🔊</label></div>
+                        <div class="form-group-checkbox"><input type="checkbox" id="sound_error" checked><label for="sound_error">Воспроизводить звук при ошибке оплаты ⚠️</label></div>
+                        <div class="form-group-checkbox"><input type="checkbox" id="printing_check" checked><label for="printing_check">Печать чека</label></div>
+                        <div class="form-group-checkbox"><input type="checkbox" id="no_order_no_card"><label for="no_order_no_card">Не начинать заказ без карты клиента</label></div>
+                        <div class="form-group-checkbox"><input type="checkbox" id="save_goods_order" checked><label for="save_goods_order">Сохранять товары в заказ при вводе</label></div>
+                        <div class="form-group-checkbox"><input type="checkbox" id="kb_reader_client"><label for="kb_reader_client">Клавиатурный считыватель для карт клиента</label></div>
+                        <div class="form-group-checkbox"><input type="checkbox" id="use_favorites"><label for="use_favorites">Использовать избранное меню</label></div>
+                    </div>
+                    <div class="form-grid" style="margin-top: 10px;">
+                        <div class="form-group"><label>Выход по timeout через (сек.)</label><input type="number" class="input-field" value="60"></div>
+                        <div class="form-group"><label>Время ожидания печати (сек)</label><input type="number" class="input-field" value="15"></div>
+                        <div class="form-group" style="grid-column: span 2;"><div class="form-group-checkbox" style="padding: 0;"><input type="checkbox" id="client_pd"><label for="client_pd">Использовать защиту персональных данных клиента</label></div></div>
+                        <div class="form-group" style="grid-column: span 2;"><div class="form-group-checkbox" style="padding: 0;"><input type="checkbox" id="client_balance_get"><label for="client_balance_get">Брать баланс клиента</label></div></div>
+                    </div>
+                </div>
+
+                <div style="margin-top: 20px; text-align: right; border-top: 1px solid #cccccc; padding-top: 15px;">
+                    <button type="button" class="btn btn-blue" onclick="closeModal('modal-create-config')" style="margin-right: 5px;">Отмена</button>
+                    <button type="submit" class="btn btn-green">Сохранить конфигурацию</button>
+                </div>
+            </form>
         </div>
     </div>
 
@@ -196,7 +569,6 @@ body { font-family: Arial, sans-serif; background-color: #f4f6f9; color: #333333
         localStorage.setItem('sidebarCollapsed', sidebar.classList.contains('collapsed'));
     }
     
-    // Восстановление состояния сайдбара при загрузке страницы
     document.addEventListener("DOMContentLoaded", function() {
         var isCollapsed = localStorage.getItem('sidebarCollapsed') === 'true';
         var sidebar = document.getElementById('sidebarMenu');
@@ -210,6 +582,36 @@ body { font-family: Arial, sans-serif; background-color: #f4f6f9; color: #333333
     }
     function closeModal(modalId) {
         document.getElementById(modalId).style.display = 'none';
+    }
+
+    // Переключение вкладок в модальном окне
+    function switchTab(evt, tabId) {
+        var i, tabcontent, tablinks;
+        tabcontent = document.getElementsByClassName("tab-content");
+        for (i = 0; i < tabcontent.length; i++) {
+            tabcontent[i].classList.remove("active");
+        }
+        tablinks = document.getElementsByClassName("tab-link");
+        for (i = 0; i < tablinks.length; i++) {
+            tablinks[i].classList.remove("active");
+        }
+        document.getElementById(tabId).classList.add("active");
+        evt.currentTarget.classList.add("active");
+    }
+
+    // Имитация сохранения
+    function saveNewConfig(event) {
+        event.preventDefault();
+        alert('Конфигурационный файл успешно валидирован и создан в системе!');
+        closeModal('modal-create-config');
+    }
+
+    // Информативная функция раскатки
+    function deployConfig(fileName, targetZone) {
+        const confirmation = confirm(`Внимание!\n\nВы собираетесь раскатить файл конфигурации: "${fileName}"\nНа область действия: "${targetZone}"\n\nПродолжить?`);
+        if (confirmation) {
+            alert(`Успешно! Конфигурация "${fileName}" была скомпилирована и отправлена на терминалы группы: "${targetZone}".`);
+        }
     }
 </script>
 

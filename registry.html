@@ -39,24 +39,29 @@ body { font-family: Arial, sans-serif; background-color: #f4f6f9; color: #333333
 .main-content { flex-grow: 1; display: flex; flex-direction: column; overflow-x: hidden; }
 .top-navbar { background-color: #1d3557; color: #ffffff; padding: 10px 20px; height: 40px; font-size: 13px; font-weight: bold; display: flex; justify-content: space-between; align-items: center; }
 
-/* Фильтры и элементы */
+/* Расширенные фильтры вверху страницы */
 .filter-section { background-color: #ffffff; border-bottom: 1px solid #cccccc; padding: 15px; }
-.filter-grid { display: flex; gap: 15px; align-items: flex-end; }
-.filter-cell { flex: 1; }
-.filter-cell label { display: block; font-weight: bold; margin-bottom: 5px; }
-.input-field { width: 100%; padding: 6px; border: 1px solid #cccccc; background-color: #fafafa; font-size: 12px; }
-.actions-panel { background-color: #ffffff; padding: 10px 15px; border-bottom: 1px solid #e0e0e0; display: flex; flex-wrap: wrap; gap: 5px; }
+.filter-grid { display: grid; grid-template-columns: repeat(4, 1fr) auto; gap: 15px; align-items: flex-end; }
+.filter-cell { display: flex; flex-direction: column; gap: 5px; }
+.filter-cell label { font-weight: bold; color: #4a5568; }
+.input-field { width: 100%; padding: 6px; border: 1px solid #cccccc; background-color: #fafafa; font-size: 12px; border-radius: 2px; }
+
+/* Верхняя панель действий */
+.actions-panel { background-color: #ffffff; padding: 10px 15px; border-bottom: 1px solid #e0e0e0; display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.selection-counter { font-size: 11px; font-weight: bold; color: #4a5568; margin-left: auto; background: #edf2f7; padding: 6px 12px; border-radius: 3px; border: 1px solid #cbd5e0; }
 
 .btn { padding: 6px 12px; font-size: 11px; font-weight: bold; cursor: pointer; border: 1px solid transparent; border-radius: 2px; text-decoration: none; display: inline-block; }
 .btn-red { background-color: #e63946; color: #ffffff; border-color: #d62828; }
 .btn-red:hover { background-color: #c92a36; }
 .btn-blue { background-color: #457b9d; color: #ffffff; border-color: #1d3557; }
 .btn-blue:hover { background-color: #386685; }
+.btn-disabled { background-color: #e2e8f0; color: #a0aec0; border-color: #cbd5e0; cursor: not-allowed; }
 
+/* Табличная часть */
 .table-container { padding: 15px; flex-grow: 1; background: #ffffff; overflow-x: auto; }
-.grid-table { width: 100%; border-collapse: collapse; border: 1px solid #cccccc; background-color: #ffffff; }
-.grid-table th { background-color: #f8fafc; border: 1px solid #cccccc; padding: 8px; text-align: left; font-weight: bold; color: #1d3557; }
-.grid-table td { border: 1px solid #cccccc; padding: 8px; vertical-align: top; }
+.grid-table { width: 100%; border-collapse: collapse; border: 1px solid #cccccc; background-color: #ffffff; white-space: nowrap; }
+.grid-table th { background-color: #f8fafc; border: 1px solid #cccccc; padding: 8px; text-align: left; font-weight: bold; color: #1d3557; font-size: 11px; }
+.grid-table td { border: 1px solid #cccccc; padding: 8px; vertical-align: middle; font-size: 11px; }
 
 .row-warn { background-color: #fffaf0; }
 .row-offline { background-color: #f7fafc; color: #718096; }
@@ -64,6 +69,28 @@ body { font-family: Arial, sans-serif; background-color: #f4f6f9; color: #333333
 .text-error { color: #e63946; font-weight: bold; }
 .text-success { color: #2ea043; font-weight: bold; }
 .text-warn { color: #d69e2e; font-weight: bold; }
+.text-muted { color: #718096; font-size: 10px; display: block; }
+.code-badge { background: #f1f5f9; padding: 2px 4px; border: 1px solid #e2e8f0; border-radius: 3px; font-family: monospace; font-size: 10px; }
+
+/* Модальные окна */
+.modal-backdrop {
+    position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+    background: rgba(13, 34, 64, 0.5); display: none; align-items: center; justify-content: center; z-index: 1000;
+}
+.modal-backdrop.open { display: flex; }
+.modal-window {
+    background: #ffffff; width: 540px; max-width: 90%; border-radius: 4px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2); border: 1px solid #cbd5e0;
+    display: flex; flex-direction: column; color: #333;
+}
+.modal-header { background: #1d3557; color: #ffffff; padding: 10px 15px; font-size: 13px; font-weight: bold; display: flex; justify-content: space-between; align-items: center; }
+.modal-close { background: none; border: none; color: #ffffff; font-size: 18px; cursor: pointer; }
+.modal-close:hover { color: #ff4d4d; }
+.modal-body { padding: 15px; display: flex; flex-direction: column; gap: 12px; max-height: 60vh; overflow-y: auto; }
+.modal-footer { background: #f8fafc; padding: 10px 15px; border-top: 1px solid #e2e8f0; display: flex; justify-content: flex-end; gap: 8px; }
+.selected-list-preview { font-size: 11px; color: #4a5568; background: #f7fafc; padding: 6px; border: 1px solid #e2e8f0; max-height: 60px; overflow-y: auto; white-space: normal; margin-bottom: 5px; }
+.form-row { display: flex; flex-direction: column; gap: 4px; }
+.form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
 </style>
 </head>
 <body>
@@ -92,307 +119,268 @@ body { font-family: Arial, sans-serif; background-color: #f4f6f9; color: #333333
 
             <div class="filter-section">
                 <div class="filter-grid">
-                    <div class="filter-cell"><label>Объект (Организация)</label><input type="text" class="input-field" value="[ Все объекты ]"></div>
-                    <div class="filter-cell"><label>Группа</label><input type="text" class="input-field" value="[ Все группы ]"></div>
+                    <div class="filter-cell">
+                        <label>Поиск (Название / ID)</label>
+                        <input type="text" class="input-field" placeholder="Введите ID или имя...">
+                    </div>
+                    <div class="filter-cell">
+                        <label>Организация / Объект</label>
+                        <input type="text" class="input-field" value="[ Все объекты ]">
+                    </div>
+                    <div class="filter-cell">
+                        <label>Группа тегов</label>
+                        <input type="text" class="input-field" value="[ Все группы ]">
+                    </div>
+                    <div class="filter-cell">
+                        <label>Версия ПО</label>
+                        <input type="text" class="input-field" placeholder="Все версии">
+                    </div>
                     <button class="btn btn-red" style="padding: 6px 25px;">Фильтровать</button>
                 </div>
             </div>
+
             <div class="actions-panel">
                 <button class="btn btn-red" onclick="alert('Регистрация КСО')">Зарегистрировать новый КСО (Присвоить ID)</button>
-                <button class="btn btn-blue" onclick="alert('Связи обновлены')">Перестроить маппинг Топологии</button>
+                
+                <button class="btn btn-blue btn-disabled" id="btnBulkMapping" onclick="openMappingModal()" disabled>⇄ Изменить маппинг и группы</button>
+                <button class="btn btn-blue btn-disabled" id="idBulkParams" onclick="openParamsModal()" disabled>⚙️ Изменить параметры</button>
+                
+                <div class="selection-counter">Выбрано КСО: <span id="selectedCount">0</span></div>
             </div>
+
             <div class="table-container">
                 <div style="font-weight: bold; margin-bottom: 10px; color:#1d3557;">Связывание логических областей: Терминал &rarr; Группа &rarr; Объект</div>
-                <table class="grid-table">
+                <table class="grid-table" id="ksoTable">
                     <thead>
                         <tr>
-                            <th>Системный ID</th>
-                            <th>Идентификатор хоста (UUID)</th>
-                            <th>Сетевое имя терминала</th>
-                            <th>Логическая Группа</th>
-                            <th>Объект (Организация)</th>
-                            <th>Синхронизация данных</th>
+                            <th width="30"><input type="checkbox" id="selectAll" onclick="toggleSelectAll(this)"></th>
+                            <th>ID</th>
+                            <th>Название терминала / Хост UUID</th>
+                            <th>Организация & Объект</th>
+                            <th>Текущая Группа (Маппинг)</th>
+                            <th>Текущая конфигурация</th>
+                            <th>Версия ПО</th>
+                            <th>Работает</th>
+                            <th>Данные терминала</th>
+                            <th>Последние действия</th>
+                            <th>Синхронизация</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
+                        <tr data-id="33" data-name="117 ЕвроХим КСО :EVX10">
+                            <td><input type="checkbox" class="kso-checkbox" onclick="syncRowSelection()"></td>
                             <td><b>33</b></td>
-                            <td>31b516cd-2aac-400f-8e0b-6d380cb1dbc6</td>
-                            <td>117 ЕвроХим КСО :EVX10</td>
-                            <td><span class="text-warn">#Новый КСО</span></td>
+                            <td>
+                                <b>117 ЕвроХим КСО :EVX10</b>
+                                <span class="text-muted">31b516cd-2aac-400f-8e0b-6d380cb1dbc6</span>
+                            </td>
                             <td>IFCM TECH</td>
+                            <td class="group-cell"><span class="text-warn">#Новый КСО</span></td>
+                            <td><span class="code-badge">prod_retail_default.json</span></td>
+                            <td>v2.4.12</td>
+                            <td><span class="text-success">Да</span></td>
+                            <td><span class="text-muted">RAM: 4GB, HDD: 42GB свободного места</span></td>
+                            <td>Смена конфигурации через веб-панель</td>
                             <td><span class="text-success">В сети</span></td>
                         </tr>
-                        <tr class="row-offline">
+                        <tr class="row-offline" data-id="26" data-name="196 Норникель НМЗ №16 КАССА №2">
+                            <td><input type="checkbox" class="kso-checkbox" onclick="syncRowSelection()"></td>
                             <td><b>26</b></td>
-                            <td>d8674162-c99a-4bf5-a5e9-c545a7c26c94</td>
-                            <td>196 Норникель НМЗ №16 КАССА №2 :NRK4</td>
-                            <td><span>#Фронт</span></td>
+                            <td>
+                                <b>196 Норникель НМЗ №16 КАССА №2 :NRK4</b>
+                                <span class="text-muted">d8674162-c99a-4bf5-a5e9-c545a7c26c94</span>
+                            </td>
                             <td>Норникель / IFCM TECH</td>
+                            <td class="group-cell"><span>#Фронт</span></td>
+                            <td><span class="code-badge">prod_retail_default.json</span></td>
+                            <td>v2.4.10</td>
+                            <td><span class="text-error">Нет</span></td>
+                            <td><span class="text-muted">Нет ответа от хоста оборудования</span></td>
+                            <td>Патч системы обновлений завершен с ошибкой</td>
                             <td><span>Не в сети (с 09.04.2026)</span></td>
                         </tr>
-                        <tr>
+                        <tr data-id="17" data-name="219 Ванкор ВПУ ОБП Касса">
+                            <td><input type="checkbox" class="kso-checkbox" onclick="syncRowSelection()"></td>
                             <td><b>17</b></td>
-                            <td>8a085bb1-b1dd-4f58-a4de-e044b4ddf138</td>
-                            <td>219 Ванкор ВПУ ОБП Касса Самообслуживания :VNK49</td>
-                            <td><span>#Самообслуживание фаст фуд</span></td>
+                            <td>
+                                <b>219 Ванкор ВПУ ОБП Касса Самообслуживания :VNK49</b>
+                                <span class="text-muted">8a085bb1-b1dd-4f58-a4de-e044b4ddf138</span>
+                            </td>
                             <td>Ванкор / IFCM TECH</td>
+                            <td class="group-cell"><span>#Самообслуживание фаст фуд</span></td>
+                            <td><span class="code-badge">test_checkout_fast.json</span></td>
+                            <td>v2.5.0-rc3</td>
+                            <td><span class="text-success">Да</span></td>
+                            <td><span class="text-muted">RAM: 8GB, Весы: ОК, Принтер: ОК</span></td>
+                            <td>Загрузка справочников номенклатуры (успешно)</td>
                             <td><span class="text-success">В сети</span></td>
                         </tr>
-                        <tr>
+                        <tr data-id="8" data-name="239 Ванкор Холодильник">
+                            <td><input type="checkbox" class="kso-checkbox" onclick="syncRowSelection()"></td>
                             <td><b>8</b></td>
-                            <td>baa19935-d8f1-48ae-ad70-77615d61cf82</td>
-                            <td>239 Ванкор ВПУ ОБП Холодильник на доверии :VNK50</td>
-                            <td><span>#Холодильник на доверии; #спецпитание</span></td>
+                            <td>
+                                <b>239 Ванкор ВПУ ОБП Холодильник на доверии :VNK50</b>
+                                <span class="text-muted">baa19935-d8f1-48ae-ad70-77615d61cf82</span>
+                            </td>
                             <td>Ванкор / IFCM TECH</td>
+                            <td class="group-cell"><span>#Холодильник на доверии; #спецпитание</span></td>
+                            <td><span class="code-badge">prod_retail_default.json</span></td>
+                            <td>v2.4.12</td>
+                            <td><span class="text-success">Да</span></td>
+                            <td><span class="text-muted">Терминал безналичной оплаты подключен</span></td>
+                            <td>Периодическая сверка итогов смены</td>
                             <td><span class="text-success">В сети</span></td>
                         </tr>
-                        <tr>
+                        <tr data-id="14" data-name="265 Марс Спб КСО">
+                            <td><input type="checkbox" class="kso-checkbox" onclick="syncRowSelection()"></td>
                             <td><b>14</b></td>
-                            <td>fb71a8df-70aa-4068-a33a-7f69dc880cac</td>
-                            <td>265 Марс Спб КСО</td>
-                            <td><span>#Умная касса</span></td>
+                            <td>
+                                <b>265 Марс Спб КСО</b>
+                                <span class="text-muted">fb71a8df-70aa-4068-a33a-7f69dc880cac</span>
+                            </td>
                             <td>Марс / IFCM TECH</td>
+                            <td class="group-cell"><span>#Умная касса</span></td>
+                            <td><span class="code-badge">prod_retail_default.json</span></td>
+                            <td>v2.4.12</td>
+                            <td><span class="text-success">Да</span></td>
+                            <td><span class="text-muted">Камера сканирования: OK, СБП: OK</span></td>
+                            <td>Применение маркетинговой акции «Скидка дня»</td>
                             <td><span class="text-success">В сети</span></td>
                         </tr>
-                        <tr class="row-offline">
+                        <tr class="row-offline" data-id="16" data-name="268 Норникель Кафетерий">
+                            <td><input type="checkbox" class="kso-checkbox" onclick="syncRowSelection()"></td>
                             <td><b>16</b></td>
-                            <td>20e06083-a8be-468d-87f0-8b6bfdde6a0e</td>
-                            <td>268 Норникель Кафетерий №14 :NRK16</td>
-                            <td><span>#Разработка</span></td>
+                            <td>
+                                <b>268 Норникель Кафетерий №14 :NRK16</b>
+                                <span class="text-muted">20e06083-a8be-468d-87f0-8b6bfdde6a0e</span>
+                            </td>
                             <td>Норникель / IFCM TECH</td>
+                            <td class="group-cell"><span>#Разработка</span></td>
+                            <td><span class="code-badge">test_checkout_fast.json</span></td>
+                            <td>v2.3.1</td>
+                            <td><span class="text-error">Нет</span></td>
+                            <td><span class="text-muted">Питание выключено сотрудниками объекта</span></td>
+                            <td>Перевод в режим технического обслуживания</td>
                             <td><span>Не в сети (с 09.12.2025)</span></td>
                         </tr>
-                        <tr>
+                        <tr data-id="4" data-name="273 Ванкор Касса 2">
+                            <td><input type="checkbox" class="kso-checkbox" onclick="syncRowSelection()"></td>
                             <td><b>4</b></td>
-                            <td>0035942f-1682-4dbb-b5c3-8c12f092e73c</td>
-                            <td>273 Ванкор ВПУ ОБП Касса Самообслуживания 2 :VNK52</td>
-                            <td><span>#Самообслуживание фаст фуд; #лимиты</span></td>
+                            <td>
+                                <b>273 Ванкор ВПУ ОБП Касса Самообслуживания 2 :VNK52</b>
+                                <span class="text-muted">0035942f-1682-4dbb-b5c3-8c12f092e73c</span>
+                            </td>
                             <td>Ванкор / IFCM TECH</td>
+                            <td class="group-cell"><span>#Самообслуживание фаст фуд; #лимиты</span></td>
+                            <td><span class="code-badge">test_checkout_fast.json</span></td>
+                            <td>v2.4.12</td>
+                            <td><span class="text-success">Да</span></td>
+                            <td><span class="text-muted">Лимиты корпоративного питания загружены</span></td>
+                            <td>Обновление локальной базы стоп-листов карт</td>
                             <td><span class="text-success">В сети</span></td>
                         </tr>
-                        <tr>
+                        <tr data-id="11" data-name="274 Ванкор ВПУ ВЖК Магазин">
+                            <td><input type="checkbox" class="kso-checkbox" onclick="syncRowSelection()"></td>
                             <td><b>11</b></td>
-                            <td>b627569c-d681-4951-add8-197f82b70dee</td>
-                            <td>274 Ванкор ВПУ ВЖК Магазин Самообслуживания :VNK53</td>
-                            <td><span>#Самообслуживание ритейл</span></td>
+                            <td>
+                                <b>274 Ванкор ВПУ ВЖК Магазин Самообслуживания :VNK53</b>
+                                <span class="text-muted">b627569c-d681-4951-add8-197f82b70dee</span>
+                            </td>
                             <td>Ванкор / IFCM TECH</td>
+                            <td class="group-cell"><span>#Самообслуживание ритейл</span></td>
+                            <td><span class="code-badge">prod_retail_default.json</span></td>
+                            <td>v2.4.12</td>
+                            <td><span class="text-success">Да</span></td>
+                            <td><span class="text-muted">Сканер ШК: OK, Пинпад: OK</span></td>
+                            <td>Перезапуск кассового модуля (плановый)</td>
                             <td><span class="text-success">В сети</span></td>
-                        </tr>
-                        <tr>
-                            <td><b>3</b></td>
-                            <td>a598aa80-7ee3-4d43-9eaf-3299821b7b19</td>
-                            <td>275 Ванкор ВПУ ОБП Магазин Самообслуживания :VNK54</td>
-                            <td><span>#Самообслуживание ритейл</span></td>
-                            <td>Ванкор / IFCM TECH</td>
-                            <td><span class="text-success">В сети</span></td>
-                        </tr>
-                        <tr>
-                            <td><b>34</b></td>
-                            <td>738604d3-9096-48f5-9269-28d7a3d6293e</td>
-                            <td>275 Ванкор ВПУ ОБП Магазин Самообслуживания :VNK54</td>
-                            <td><span class="text-warn">#Новый КСО</span></td>
-                            <td>IFCM TECH</td>
-                            <td><span class="text-success">В сети</span></td>
-                        </tr>
-                        <tr class="row-offline">
-                            <td><b>13</b></td>
-                            <td>64c33a2a-5baf-4369-ab96-585eba856816</td>
-                            <td>276 Мондэлис КСО :MON2</td>
-                            <td><span>#Самообслуживание фаст фуд</span></td>
-                            <td>Монделиз / IFCM TECH</td>
-                            <td><span>Не в сети (с 03.05.2026)</span></td>
-                        </tr>
-                        <tr class="row-offline">
-                            <td><b>31</b></td>
-                            <td>d0a227b5-07e6-4c92-ab0f-8c2dadc521b2</td>
-                            <td>276 Мондэлис КСО :MON2</td>
-                            <td><span>#Самообслуживание ритейл</span></td>
-                            <td>Монделиз / IFCM TECH</td>
-                            <td><span>Не в сети (с 04.03.2026)</span></td>
-                        </tr>
-                        <tr>
-                            <td><b>9</b></td>
-                            <td>435a6bd0-8385-4f38-96e3-7f7150d838fb</td>
-                            <td>277 ВСНК Магазин ЖБК КСО :VSNG9</td>
-                            <td><span>#Самообслуживание ритейл</span></td>
-                            <td>ВСНК / IFCM TECH</td>
-                            <td><span class="text-success">В сети</span></td>
-                        </tr>
-                        <tr>
-                            <td><b>0</b></td>
-                            <td>9a86446b-f620-4780-8ee1-957ee81ac68c</td>
-                            <td>279 Автобан Касса2 :AVT2</td>
-                            <td><span>#Холодильник на доверии</span></td>
-                            <td>Автобан / IFCM TECH</td>
-                            <td><span class="text-success">В сети</span></td>
-                        </tr>
-                        <tr class="row-offline">
-                            <td><b>6</b></td>
-                            <td>b2674fc3-ca8a-4376-b059-c06f04090edc</td>
-                            <td>282 Фармасинтез Касса Самообслуживания 1 :FMZ3</td>
-                            <td><span>#Самообслуживание фаст фуд</span></td>
-                            <td>Фармасинтез / IFCM TECH</td>
-                            <td><span>Не в сети (с 12.12.2025)</span></td>
-                        </tr>
-                        <tr>
-                            <td><b>10</b></td>
-                            <td>aabc5a0e-1610-40fe-b3ea-962cd5e052a8</td>
-                            <td>283 Фармасинтез Касса Самообслуживания 2 :FMZ4</td>
-                            <td><span>#Самообслуживание фаст фуд</span></td>
-                            <td>Фармасинтез / IFCM TECH</td>
-                            <td><span class="text-success">В сети</span></td>
-                        </tr>
-                        <tr class="row-warn">
-                            <td><b>37</b></td>
-                            <td>c6a57a54-7a3e-42b7-bf29-c4a3cc222650</td>
-                            <td>283 Фармасинтез Касса Самообслуживания 2 :FMZ4</td>
-                            <td><span class="text-warn">#Новый КСО</span></td>
-                            <td>IFCM TECH</td>
-                            <td><span class="text-warn">Предупреждение (17.03)</span></td>
-                        </tr>
-                        <tr>
-                            <td><b>7</b></td>
-                            <td>95130ef6-67f5-4a80-bbd8-64402f98efa7</td>
-                            <td>284 Фармасинтез Холодильник на доверии :FMZ5</td>
-                            <td><span>#Холодильник на доверии</span></td>
-                            <td>Фармасинтез / IFCM TECH</td>
-                            <td><span class="text-success">В сети</span></td>
-                        </tr>
-                        <tr>
-                            <td><b>15</b></td>
-                            <td>2326ca87-22e1-439b-bab1-d25476faf116</td>
-                            <td>291 ВСНК Столовая ЖБК КСО Касса 3 :VSNG10</td>
-                            <td><span>#Самообслуживание фаст фуд</span></td>
-                            <td>ВСНК / IFCM TECH</td>
-                            <td><span class="text-success">В сети</span></td>
-                        </tr>
-                        <tr>
-                            <td><b>4720</b></td>
-                            <td>1dde8e6f-5475-4460-8384-1f6bad215fde</td>
-                            <td>292 ВСНК Столовая ЖБК КСО Касса 4 :VSNG11</td>
-                            <td><span>#Самообслуживание фаст фуд</span></td>
-                            <td>ВСНК / IFCM TECH</td>
-                            <td><span class="text-success">В сети</span></td>
-                        </tr>
-                        <tr>
-                            <td><b>4728</b></td>
-                            <td>fd8ce144-6ab8-430d-99a3-8cb1f83b74b6</td>
-                            <td>293 ВСНК Столовая ЖБК КСО Касса 5 :VSNG12</td>
-                            <td><span>#Самообслуживание фаст фуд</span></td>
-                            <td>ВСНК / IFCM TECH</td>
-                            <td><span class="text-success">В сети</span></td>
-                        </tr>
-                        <tr>
-                            <td><b>50</b></td>
-                            <td>27a444c9-76f5-4374-9953-75f9af5faf59</td>
-                            <td>294 Ванкор ВПУ ОБП Касса Самообслуживания 3 :VNK56</td>
-                            <td><span>#Самообслуживание фаст фуд</span></td>
-                            <td>Ванкор / IFCM TECH</td>
-                            <td><span class="text-success">В сети</span></td>
-                        </tr>
-                        <tr>
-                            <td><b>49</b></td>
-                            <td>21cd2e53-1f6d-4eca-9c42-dfc52ca143c2</td>
-                            <td>295 Ванкор ВПУ ОБП Касса Самообслуживания 4 :VNK57</td>
-                            <td><span>#Самообслуживание фаст фуд</span></td>
-                            <td>Ванкор / IFCM TECH</td>
-                            <td><span class="text-success">В сети</span></td>
-                        </tr>
-                        <tr class="row-warn">
-                            <td><b>18</b></td>
-                            <td>513868e3-7b32-4215-9b1c-9ca641a38542</td>
-                            <td>296 Барилла КСО :BRL</td>
-                            <td><span>#Самообслуживание фаст фуд</span></td>
-                            <td>Барилла / IFCM TECH</td>
-                            <td><span class="text-warn">Предупреждение</span></td>
-                        </tr>
-                        <tr>
-                            <td><b>20</b></td>
-                            <td>f07e26f9-b09d-40d6-9b9d-1e997c5934bd</td>
-                            <td>299 Нягань РН-Нягань Касса Самообслуживания :RNN5</td>
-                            <td><span>#Самообслуживание фаст фуд</span></td>
-                            <td>РН-Няганьнефтегаз / IFCM TECH</td>
-                            <td><span class="text-success">В сети</span></td>
-                        </tr>
-                        <tr class="row-offline">
-                            <td><b>21</b></td>
-                            <td>50836c1b-016b-43d3-869e-b7636f96eb32</td>
-                            <td>302 Ванкор ВПУ КЭМП Касса Самообслуживания 1:VNK58</td>
-                            <td><span>#Самообслуживание фаст фуд</span></td>
-                            <td>Ванкор / IFCM TECH</td>
-                            <td><span>Не в сети (с 22.03.2026)</span></td>
-                        </tr>
-                        <tr>
-                            <td><b>22</b></td>
-                            <td>89fc7fef-85a2-4fad-8fed-4ba178932491</td>
-                            <td>303 Ванкор ВПУ КЭМП Касса Самообслуживания 2:VNK59</td>
-                            <td><span>#Самообслуживание фаст фуд</span></td>
-                            <td>Ванкор / IFCM TECH</td>
-                            <td><span class="text-success">В сети</span></td>
-                        </tr>
-                        <tr class="row-offline">
-                            <td><b>23</b></td>
-                            <td>a2eb75d7-296d-4e13-9df2-362db19f0c5a</td>
-                            <td>304 Ванкор ВПУ КЭМП Касса Самообслуживания3 :VNK60</td>
-                            <td><span>#Самообслуживание фаст фуд</span></td>
-                            <td>Ванкор / IFCM TECH</td>
-                            <td><span>Не в сети (с 04.03.2026)</span></td>
-                        </tr>
-                        <tr>
-                            <td><b>36</b></td>
-                            <td>c8f34550-4a27-4afd-816d-9e630c4966cc</td>
-                            <td>304 Ванкор ВПУ КЭМП Касса Самообслуживания3 :VNK60</td>
-                            <td><span class="text-warn">#Новый КСО</span></td>
-                            <td>IFCM TECH</td>
-                            <td><span class="text-success">В сети</span></td>
-                        </tr>
-                        <tr>
-                            <td><b>24</b></td>
-                            <td>dbc2bc72-6a16-42c5-afca-1ff974bbb543</td>
-                            <td>305 Ванкор ВПУ КЭМП Касса Самообслуживания4 :VNK61</td>
-                            <td><span>#Самообслуживание фаст фуд</span></td>
-                            <td>Ванкор / IFCM TECH</td>
-                            <td><span class="text-success">В сети</span></td>
-                        </tr>
-                        <tr class="row-offline">
-                            <td><b>25</b></td>
-                            <td>a03be2ce-7986-4c8d-a823-ef923753d147</td>
-                            <td>306 Ванкор ВПУ КЭМП Касса Самообслуживания5 :VNK62</td>
-                            <td><span>#Самообслуживание фаст фуд</span></td>
-                            <td>Ванкор / IFCM TECH</td>
-                            <td><span>Не в сети (с 04.03.2026)</span></td>
-                        </tr>
-                        <tr>
-                            <td><b>35</b></td>
-                            <td>ca68c581-4d14-469a-a4d7-ed5505692569</td>
-                            <td>306 Ванкор ВПУ КЭМП Касса Самообслуживания5 :VNK62</td>
-                            <td><span class="text-warn">#Новый КСО</span></td>
-                            <td>IFCM TECH</td>
-                            <td><span class="text-success">В сети</span></td>
-                        </tr>
-                        <tr class="row-offline">
-                            <td><b>28</b></td>
-                            <td>47cd10f5-8e6c-4816-b7d3-f7e2caa1df01</td>
-                            <td>309 Новатэк МСК Самообслуживания 1 :NVKM3</td>
-                            <td><span>#Самообслуживание фаст фуд</span></td>
-                            <td>Новатэк / IFCM TECH</td>
-                            <td><span>Не в сети (с 08.05.2026)</span></td>
-                        </tr>
-                        <tr class="row-offline">
-                            <td><b>29</b></td>
-                            <td>860a316b-0b33-4544-908c-1e10e407fc0b</td>
-                            <td>310 Новатэк МСК Самообслуживания 2 :NVKM4</td>
-                            <td><span>#Самообслуживание фаст фуд</span></td>
-                            <td>Новатэк / IFCM TECH</td>
-                            <td><span>Не в сети (с 08.05.2026)</span></td>
                         </tr>
                     </tbody>
                 </table>
             </div>
         </div>
     </div>
-    
+
+    <div class="modal-backdrop" id="mappingModal">
+        <div class="modal-window">
+            <div class="modal-header">
+                <span>Маппинг топологии & Группировка КСО</span>
+                <button class="modal-close" onclick="closeModal('mappingModal')">×</button>
+            </div>
+            <div class="modal-body">
+                <div><b>Выбранные терминалы КСО:</b></div>
+                <div class="selected-list-preview" id="mappingSelectedList"></div>
+                
+                <div class="form-row">
+                    <label style="font-weight: bold;">Назначить логическую группу:</label>
+                    <select class="input-field" id="modalTargetGroup">
+                        <option value="Магазины ВАНКОР">🏢 Магазины ВАНКОР</option>
+                        <option value="Продажа ТАБАКА">🚬 Продажа ТАБАКА</option>
+                        <option value="Самообслуживание ритейл">🛒 Самообслуживание ритейл</option>
+                        <option value="Самообслуживание фаст фуд">🍔 Самообслуживание фаст фуд</option>
+                        <option value="Холодильник на доверии">❄️ Холодильник на доверии</option>
+                    </select>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn" style="background:#e2e8f0; color:#333;" onclick="closeModal('mappingModal')">Отмена</button>
+                <button class="btn btn-blue" onclick="submitMapping()">Применить маппинг</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-backdrop" id="paramsModal">
+        <div class="modal-window">
+            <div class="modal-header">
+                <span>Пакетное изменение технологических параметров КСО</span>
+                <button class="modal-close" onclick="closeModal('paramsModal')">×</button>
+            </div>
+            <div class="modal-body">
+                <div><b>Изменение конфигурации для КСО:</b></div>
+                <div class="selected-list-preview" id="paramsSelectedList"></div>
+                
+                <div class="form-grid">
+                    <div class="form-row">
+                        <label style="font-weight: bold;">Товары 18+ (Контроль)</label>
+                        <select class="input-field" id="p18">
+                            <option value="ON">Запрашивать подтверждение возраста</option>
+                            <option value="OFF">Отключить проверку 18+</option>
+                        </select>
+                    </div>
+                    <div class="form-row">
+                        <label style="font-weight: bold;">Оплата с баланса</label>
+                        <select class="input-field" id="pBalance">
+                            <option value="ON">Разрешить (карты сотрудников)</option>
+                            <option value="OFF">Запретить (только банк/СБП)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-grid">
+                    <div class="form-row">
+                        <label style="font-weight: bold;">Время работы КСО</label>
+                        <select class="input-field" id="pWorkTime">
+                            <option value="24/7">Круглосуточно (24/7)</option>
+                            <option value="08:00-22:00">По графику объекта (08:00 - 22:00)</option>
+                            <option value="OFFLINE">Временно закрыт (Тех. перерыв)</option>
+                        </select>
+                    </div>
+                    <div class="form-row">
+                        <label style="font-weight: bold;">Обновление конфигураций</label>
+                        <select class="input-field" id="pConfig">
+                            <option value="prod_retail_default.json">prod_retail_default.json</option>
+                            <option value="test_checkout_fast.json">test_checkout_fast.json</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn" style="background:#e2e8f0; color:#333;" onclick="closeModal('paramsModal')">Отмена</button>
+                <button class="btn btn-red" onclick="submitParams()">Сохранить параметры</button>
+            </div>
+        </div>
+    </div>
+
 <script>
     function toggleSidebar() {
         var sidebar = document.getElementById('sidebarMenu');
@@ -407,6 +395,97 @@ body { font-family: Arial, sans-serif; background-color: #f4f6f9; color: #333333
             sidebar.classList.add('collapsed');
         }
     });
+
+    function toggleSelectAll(master) {
+        var checkboxes = document.querySelectorAll('.kso-checkbox');
+        checkboxes.forEach(function(cb) {
+            cb.checked = master.checked;
+        });
+        syncRowSelection();
+    }
+
+    function syncRowSelection() {
+        var selected = document.querySelectorAll('.kso-checkbox:checked');
+        var count = selected.length;
+        
+        document.getElementById('selectedCount').textContent = count;
+        
+        var btnMapping = document.getElementById('btnBulkMapping');
+        var btnParams = document.getElementById('idBulkParams');
+        var selectAll = document.getElementById('selectAll');
+        
+        if (count > 0) {
+            btnMapping.classList.remove('btn-disabled');
+            btnParams.classList.remove('btn-disabled');
+            btnMapping.removeAttribute('disabled');
+            btnParams.removeAttribute('disabled');
+        } else {
+            btnMapping.classList.add('btn-disabled');
+            btnParams.classList.add('btn-disabled');
+            btnMapping.setAttribute('disabled', 'true');
+            btnParams.setAttribute('disabled', 'true');
+            selectAll.checked = false;
+        }
+    }
+
+    function getSelectedNames() {
+        var list = [];
+        document.querySelectorAll('.kso-checkbox:checked').forEach(function(cb) {
+            var row = cb.closest('tr');
+            list.push("ID " + row.getAttribute('data-id') + " (" + row.getAttribute('data-name') + ")");
+        });
+        return list.join(', ');
+    }
+
+    function openMappingModal() {
+        document.getElementById('mappingSelectedList').textContent = getSelectedNames();
+        document.getElementById('mappingModal').classList.add('open');
+    }
+
+    function openParamsModal() {
+        document.getElementById('paramsSelectedList').textContent = getSelectedNames();
+        document.getElementById('paramsModal').classList.add('open');
+    }
+
+    function closeModal(id) {
+        document.getElementById(id).classList.remove('open');
+    }
+
+    function submitMapping() {
+        var group = document.getElementById('modalTargetGroup').value;
+        document.querySelectorAll('.kso-checkbox:checked').forEach(function(cb) {
+            var row = cb.closest('tr');
+            var cell = row.querySelector('.group-cell');
+            if(cell) cell.innerHTML = '<span>#' + group + '</span>';
+        });
+        alert('Маппинг успешно изменен для выбранных КСО.');
+        closeModal('mappingModal');
+        resetSelection();
+    }
+
+    function submitParams() {
+        var p18 = document.getElementById('p18').value;
+        var balance = document.getElementById('pBalance').value;
+        var time = document.getElementById('pWorkTime').value;
+        var cfg = document.getElementById('pConfig').value;
+
+        alert('Параметры успешно обновлены:\n' + 
+              '- Контроль 18+: ' + p18 + '\n' +
+              '- Оплата с баланса: ' + balance + '\n' +
+              '- Режим работы: ' + time + '\n' +
+              '- Шаблон .json: ' + cfg);
+              
+        closeModal('paramsModal');
+        resetSelection();
+    }
+
+    function resetSelection() {
+        document.getElementById('selectAll').checked = false;
+        document.querySelectorAll('.kso-checkbox').forEach(function(cb) {
+            cb.checked = false;
+        });
+        syncRowSelection();
+    }
 </script>
 </body>
 </html>
