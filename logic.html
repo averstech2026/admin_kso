@@ -3,20 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <title>Параметры логики КСО - Аверс Технолоджи</title>
-    <script type="text/javascript" src="https://gc.kis.v2.scr.kaspersky-labs.com/FD126C42-EBFA-4E12-B309-BB3FDD723AC1/main.js?attr=DA03CF0-iowmaS0x1kF0xi2ybdmiOHB7WHGpxsMjCR3IzL4iu6zP7evwXnwgLAeLh-ramXvr2kXGtgQXhFjJseAcGDyEVX2GkbTWQ4PkB3r-rp0VX4qkP-k2kG0IwWlp9ARXzFCWFZNA09xmjFArTQ68iCL9VNJLSJFyy2tG4yMeHzYFYoFQTvmAuciL6h8AKWk4UjAc7UQwHAND5COiT8UKu1Zlvd25vLrRGS-3nAoTETipWwy00DQr-ujyFBpr1JYqfDyiRaQHqjvfqGcSZ-QsGShjImdjPWXhjQVSRS9GMdqNlXTIWY56jrfMt2Bq" charset="UTF-8"></script><style>
+<style>
 * { box-sizing: border-box; }
 body { font-family: Arial, sans-serif; background-color: #f4f6f9; color: #333333; margin: 0; padding: 0; font-size: 12px; }
 .wrapper { display: flex; min-height: 100vh; }
-
-/* Стили модальных окон */
-.modal-overlay { 
-    display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
-    background: rgba(0,0,0,0.5); z-index: 1000; justify-content: center; align-items: center; 
-}
-.modal-content { 
-    background: #ffffff; padding: 20px; border: 1px solid #cccccc; width: 80%; max-width: 700px; 
-    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-}
 
 /* Боковое меню */
 .sidebar { 
@@ -38,7 +28,7 @@ body { font-family: Arial, sans-serif; background-color: #f4f6f9; color: #333333
 .sidebar-menu li.active a { background-color: #16335f; color: #ffffff; border-left-color: #e63946; }
 .menu-icon { display: inline-block; width: 20px; text-align: center; margin-right: 10px; flex-shrink: 0; font-size: 14px; }
 
-/* Состояние свернутого меню */
+/* Свернутый сайдбар */
 .sidebar.collapsed { width: 60px; }
 .sidebar.collapsed .sidebar-brand { justify-content: center; }
 .sidebar.collapsed .sidebar-brand-text, .sidebar.collapsed .menu-text { display: none; }
@@ -49,14 +39,22 @@ body { font-family: Arial, sans-serif; background-color: #f4f6f9; color: #333333
 .main-content { flex-grow: 1; display: flex; flex-direction: column; overflow-x: hidden; }
 .top-navbar { background-color: #1d3557; color: #ffffff; padding: 10px 20px; height: 40px; font-size: 13px; font-weight: bold; display: flex; justify-content: space-between; align-items: center; }
 
-/* Фильтры и элементы */
-.filter-section { background-color: #ffffff; border-bottom: 1px solid #cccccc; padding: 15px; }
-.filter-grid { display: flex; gap: 15px; align-items: flex-end; }
-.filter-cell { flex: 1; }
-.filter-cell label { display: block; font-weight: bold; margin-bottom: 5px; }
-.input-field { width: 100%; padding: 6px; border: 1px solid #cccccc; background-color: #fafafa; font-size: 12px; }
-.actions-panel { background-color: #ffffff; padding: 10px 15px; border-bottom: 1px solid #e0e0e0; display: flex; flex-wrap: wrap; gap: 5px; }
+/* Панели и элементы */
+.two-col-layout { display: flex; gap: 20px; padding: 15px 15px 5px 15px; }
+.layout-col { flex: 1; background: #ffffff; border: 1px solid #cccccc; padding: 15px; }
+.full-width-section { margin: 0 15px 15px 15px; background: #ffffff; border: 1px solid #cccccc; padding: 15px; }
+.col-title { font-size: 13px; font-weight: bold; color: #1d3557; margin-bottom: 15px; border-bottom: 1px solid #e0e0e0; padding-bottom: 5px; }
 
+
+.form-group { margin-bottom: 12px; }
+.form-group label { display: block; font-weight: bold; margin-bottom: 4px; }
+.form-group label.checkbox-label { font-weight: normal; cursor: pointer; display: flex; align-items: center; gap: 5px; }
+.input-field { width: 100%; padding: 6px; border: 1px solid #cccccc; background-color: #fafafa; font-size: 12px; }
+
+.actions-panel { background-color: #ffffff; padding: 10px 15px; border-bottom: 1px solid #e0e0e0; display: flex; flex-wrap: wrap; gap: 5px; }
+.apply-panel { background-color: #f8fafc; border: 1px solid #cbd5e0; padding: 12px; margin-top: 15px; display: flex; flex-wrap: wrap; gap: 15px; align-items: flex-end; }
+
+/* Кнопки */
 .btn { padding: 6px 12px; font-size: 11px; font-weight: bold; cursor: pointer; border: 1px solid transparent; border-radius: 2px; text-decoration: none; display: inline-block; }
 .btn-red { background-color: #e63946; color: #ffffff; border-color: #d62828; }
 .btn-red:hover { background-color: #c92a36; }
@@ -65,37 +63,14 @@ body { font-family: Arial, sans-serif; background-color: #f4f6f9; color: #333333
 .btn-green { background-color: #2ea043; color: #ffffff; border-color: #238636; }
 .btn-green:hover { background-color: #248235; }
 
-.update-box { background-color: #edf2f7; border: 1px solid #cbd5e0; border-left: 4px solid #457b9d; margin: 15px; padding: 15px; }
-.badge { display: inline-block; background-color: #ffffff; border: 1px solid #b0bec5; padding: 5px 10px; margin-right: 10px; font-weight: bold; }
-.badge span { color: #e63946; }
-
-.table-container { padding: 15px; flex-grow: 1; background: #ffffff; }
-.grid-table { width: 100%; border-collapse: collapse; border: 1px solid #cccccc; background-color: #ffffff; }
+/* Таблица */
+.grid-table { width: 100%; border-collapse: collapse; border: 1px solid #cccccc; background-color: #ffffff; margin-bottom: 10px; }
 .grid-table th { background-color: #f8fafc; border: 1px solid #cccccc; padding: 8px; text-align: left; font-weight: bold; color: #1d3557; }
-.grid-table td { border: 1px solid #cccccc; padding: 8px; vertical-align: top; }
+.grid-table td { border: 1px solid #cccccc; padding: 8px; vertical-align: middle; }
+.grid-table tr:hover { background-color: #f1f5f9; }
 
-.menu-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 15px; padding: 15px; }
-.menu-card { background: #ffffff; border: 1px solid #cccccc; border-radius: 3px; padding: 10px; position: relative; }
-.menu-card-img { height: 90px; background: #eaedf1; display: flex; align-items: center; justify-content: center; font-size: 24px; margin-bottom: 8px; color: #78909c; border: 1px dashed #b0bec5; }
-.menu-card-title { font-weight: bold; font-size: 13px; margin-bottom: 5px; color: #0d2240; }
-.menu-card-meta { font-size: 11px; color: #666666; margin-bottom: 4px; }
-
-.two-col-layout { display: flex; gap: 20px; padding: 15px; }
-.layout-col { flex: 1; background: #ffffff; border: 1px solid #cccccc; padding: 15px; }
-.col-title { font-size: 13px; font-weight: bold; color: #1d3557; margin-bottom: 15px; border-bottom: 1px solid #e0e0e0; padding-bottom: 5px; }
-.form-group { margin-bottom: 12px; }
-.form-group label { display: block; font-weight: bold; margin-bottom: 4px; }
-
-.bg-grey { background-color: #eaedf1; }
-.bg-red { background-color: #ff4d4d !important; color: #ffffff !important; }
-.bg-red td { color: #ffffff !important; }
-.text-error { color: #e63946; font-weight: bold; }
 .text-success { color: #2ea043; font-weight: bold; }
-.text-warn { color: #d69e2e; font-weight: bold; }
-
-.api-block { background: #2d3748; color: #a0aec0; font-family: Courier, monospace; padding: 10px; border-radius: 3px; margin-bottom: 10px; font-size: 11px; }
-.api-method { color: #38a169; font-weight: bold; margin-right: 5px; }
-.api-path { color: #e2e8f0; }
+.text-muted { color: #718096; }
 </style>
 </head>
 <body>
@@ -133,24 +108,107 @@ body { font-family: Arial, sans-serif; background-color: #f4f6f9; color: #333333
                         <label>Интервал ожидания до сброса сессии:</label>
                         <input type="number" class="input-field" value="30" style="width: 100px;"> секунд
                     </div>
+                    <div class="form-group">
+                        <label>Задержка отображения экрана лояльности:</label>
+                        <input type="number" class="input-field" value="15" style="width: 100px;"> секунд
+                    </div>
                 </div>
+
                 <div class="layout-col">
                     <div class="col-title">Поведение пользовательского интерфейса КСО</div>
                     <div class="form-group">
-                        <label><input type="checkbox" checked> Блокировать интерфейс при взвешивании товара</label>
+                        <label class="checkbox-label"><input type="checkbox" checked> Блокировать интерфейс при взвешивании товара</label>
                     </div>
                     <div class="form-group">
+                        <label class="checkbox-label"><input type="checkbox"> Запрашивать карту лояльности жестко перед оплатой</label>
+                    </div>
+                    <div class="form-group">
+                        <label class="checkbox-label"><input type="checkbox" checked> Убирать из продажи товары без ШК</label>
+                    </div>
+                    <div class="form-group">
+                        <label class="checkbox-label"><input type="checkbox" checked> Требовать подтверждение удаления товаров</label>
+                    </div>
+
+                    <div class="form-group" style="margin-top: 15px;">
                         <label>Режим работы КСО:</label>
                         <select class="input-field">
                             <option>Только безналичный расчет</option>
                             <option>Прием наличных и карт</option>
+                            <option>Демо-режим / Витрина</option>
                         </select>
                     </div>
                 </div>
             </div>
-            <div class="actions-panel" style="justify-content: flex-end;">
-                <button class="btn btn-green" onclick="alert('Параметры сохранены')">Сохранить конфигурацию логики</button>
+
+            <div class="actions-panel" style="justify-content: flex-end; margin: 0 15px 15px 15px; border: 1px solid #cccccc;">
+                <button class="btn btn-blue" onclick="alert('Текущие параметры сохранены как новый шаблон')">Сохранить как новый пресет</button>
             </div>
+
+            <div class="full-width-section">
+                <div class="col-title">Сохраненные конфигурации логики КСО</div>
+                
+                <table class="grid-table">
+                    <thead>
+                        <tr>
+                            <th style="width: 30px; text-align: center;"><input type="checkbox" id="selectAllPresets" onclick="toggleSelectAll()"></th>
+                            <th>Название конфигурации (Пресет)</th>
+                            <th>Дата создания</th>
+                            <th>Автор</th>
+                            <th>Режим КСО</th>
+                            <th>Статус внедрения</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td style="text-align: center;"><input type="checkbox" class="preset-checkbox" value="preset_1"></td>
+                            <td><strong>Стандартный Безнал (Дефолт)</strong></td>
+                            <td>12.05.2026 14:20</td>
+                            <td>Иванов И.И.</td>
+                            <td>Только безналичный расчет</td>
+                            <td><span class="text-success">Применено (Активно)</span></td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: center;"><input type="checkbox" class="preset-checkbox" value="preset_2"></td>
+                            <td><strong>Расширенный режим (Наличные + Лояльность)</strong></td>
+                            <td>18.05.2026 09:15</td>
+                            <td>Петров А.В.</td>
+                            <td>Прием наличных и карт</td>
+                            <td class="text-muted">Архив / Готов к раскатке</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: center;"><input type="checkbox" class="preset-checkbox" value="preset_3"></td>
+                            <td><strong>Тестовый стенд (Витрина без продажи)</strong></td>
+                            <td>25.05.2026 17:40</td>
+                            <td>Сидоров К.М.</td>
+                            <td>Демо-режим / Витрина</td>
+                            <td class="text-muted">Тестирование</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="apply-panel">
+                    <div style="flex: 1; min-width: 200px;">
+                        <label style="display:block; font-weight:bold; margin-bottom:5px;">Выбрать целевую группу КСО:</label>
+                        <select class="input-field" id="targetGroup">
+                            <option value="none">-- Выберите группу объектов --</option>
+                            <option value="all">Все кассы во всей сети (Массовая раскатка)</option>
+                            <option value="gaz">Группа КСО: Газпромнефть (Префикс GAZ-*)</option>
+                            <option value="nrk">Группа КСО: Норильский Никель (Префикс NRK-*)</option>
+                            <option value="custom">Указать конкретные ID касс вручную...</option>
+                        </select>
+                    </div>
+
+                    <div style="flex: 1; min-width: 200px;">
+                        <label style="display:block; font-weight:bold; margin-bottom:5px;">Конкретные ID касс (если выбрано вручную):</label>
+                        <input type="text" class="input-field" id="customKcoIds" placeholder="Например: GAZ-001, NRK-005" disabled>
+                    </div>
+
+                    <div>
+                        <button class="btn btn-green" style="padding: 7px 20px;" onclick="applyConfiguration()">Применить выбранный пресет</button>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
     
@@ -161,22 +219,59 @@ body { font-family: Arial, sans-serif; background-color: #f4f6f9; color: #333333
         localStorage.setItem('sidebarCollapsed', sidebar.classList.contains('collapsed'));
     }
     
-    // Восстановление состояния сайдбара при загрузке страницы
     document.addEventListener("DOMContentLoaded", function() {
         var isCollapsed = localStorage.getItem('sidebarCollapsed') === 'true';
         var sidebar = document.getElementById('sidebarMenu');
         if (isCollapsed && sidebar) {
             sidebar.classList.add('collapsed');
         }
+
+        // Логика разблокировки текстового поля для ID касс
+        var targetSelect = document.getElementById('targetGroup');
+        var customInput = document.getElementById('customKcoIds');
+        if (targetSelect && customInput) {
+            targetSelect.addEventListener('change', function() {
+                customInput.disabled = (this.value !== 'custom');
+                if(this.value === 'custom') customInput.focus();
+            });
+        }
     });
 
-    function openModal(modalId) {
-        document.getElementById(modalId).style.display = 'flex';
+    // Выделить/снять выделение со всех строк пресетов
+    function toggleSelectAll() {
+        var masterCheckbox = document.getElementById('selectAllPresets');
+        var checkboxes = document.querySelectorAll('.preset-checkbox');
+        checkboxes.forEach(function(cb) {
+            cb.checked = masterCheckbox.checked;
+        });
     }
-    function closeModal(modalId) {
-        document.getElementById(modalId).style.display = 'none';
+
+    // Логика кнопки применения конфигурации
+    function applyConfiguration() {
+        var selectedPresets = document.querySelectorAll('.preset-checkbox:checked');
+        var targetGroup = document.getElementById('targetGroup').value;
+        var customIds = document.getElementById('customKcoIds').value;
+
+        if (selectedPresets.length === 0) {
+            alert('Ошибка: Выберите хотя бы одну конфигурацию из таблицы!');
+            return;
+        }
+        if (selectedPresets.length > 1) {
+            alert('Ошибка: Нельзя применить несколько конфигураций одновременно. Выберите только один пресет.');
+            return;
+        }
+        if (targetGroup === 'none') {
+            alert('Ошибка: Укажите целевую группу КСО или конкретные ID устройств для раскатки!');
+            return;
+        }
+        if (targetGroup === 'custom' && !customIds.trim()) {
+            alert('Ошибка: Вы выбрали ручной ввод, но не указали ни одного ID КСО!');
+            return;
+        }
+
+        var groupText = document.getElementById('targetGroup').options[document.getElementById('targetGroup').selectedIndex].text;
+        alert('Запущена команда раскатки конфигурации.\n\nЦелевой объект: ' + groupText + (targetGroup === 'custom' ? ' (' + customIds + ')' : '') + '\nСтатус: Ожидание подтверждения в шине обновлений FrontUpdater.');
     }
 </script>
-
 </body>
 </html>
