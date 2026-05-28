@@ -72,12 +72,20 @@ body { font-family: Arial, sans-serif; background-color: #f4f6f9; color: #333333
 .btn-blue:hover { background-color: #386685; }
 .btn-green { background-color: #2ea043; color: #ffffff; border-color: #238636; }
 .btn-green:hover { background-color: #248235; }
+.btn-grey { background-color: #edf2f7; color: #4a5568; border-color: #cbd5e0; }
+.btn-grey:hover { background-color: #e2e8f0; }
 .btn-xs { padding: 3px 6px; font-size: 10px; }
 
 /* Информационная панель-справка */
 .info-notice { background-color: #fff9db; border: 1px solid #f59f00; border-left: 4px solid #f59f00; margin: 15px 15px 0 15px; padding: 10px 15px; display: flex; align-items: center; gap: 10px; }
 
-.table-container { padding: 15px; flex-grow: 1; background: #ffffff; }
+/* Новые блоки: Разделение рабочей области */
+.dashboard-grid { display: grid; grid-template-columns: 1fr 320px; gap: 15px; padding: 15px 15px 0 15px; }
+.dashboard-panel { background: #ffffff; border: 1px solid #cccccc; padding: 12px; }
+.panel-title { color: #1d3557; font-size: 12px; font-weight: bold; margin: 0 0 10px 0; border-bottom: 1px solid #e2e8f0; padding-bottom: 5px; display: flex; align-items: center; justify-content: space-between; }
+
+.table-container { padding: 0 15px 15px 15px; flex-grow: 1; background: #f4f6f9; }
+.table-box { background: #ffffff; border: 1px solid #cccccc; padding: 15px; }
 .grid-table { width: 100%; border-collapse: collapse; border: 1px solid #cccccc; background-color: #ffffff; }
 .grid-table th { background-color: #f8fafc; border: 1px solid #cccccc; padding: 8px; text-align: left; font-weight: bold; color: #1d3557; }
 .grid-table td { border: 1px solid #cccccc; padding: 8px; vertical-align: middle; }
@@ -87,6 +95,18 @@ body { font-family: Arial, sans-serif; background-color: #f4f6f9; color: #333333
 .tag-success { background-color: #e6fffa; color: #006d5b; border-color: #b2f5ea; }
 .tag-danger { background-color: #fff5f5; color: #9b2c2c; border-color: #fed7d7; }
 .tag-neutral { background-color: #edf2f7; color: #2d3748; border-color: #e2e8f0; }
+
+/* Новые теги статусов развертывания */
+.status-badge { display: inline-flex; align-items: center; gap: 4px; padding: 2px 6px; border-radius: 10px; font-size: 10px; font-weight: bold; }
+.status-active { background-color: #def7ec; color: #03543f; }
+.status-progress { background-color: #e1effe; color: #1e429f; }
+.status-empty { background-color: #f3f4f6; color: #4b5563; }
+
+/* Лог активности */
+.activity-list { list-style: none; padding: 0; margin: 0; max-height: 185px; overflow-y: auto; }
+.activity-item { padding: 6px 0; border-bottom: 1px solid #edf2f7; font-size: 11px; }
+.activity-item:last-child { border-bottom: none; }
+.activity-time { color: #a0aec0; font-size: 10px; display: block; margin-top: 2px; }
 
 .form-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; padding: 5px 0; }
 .form-group { margin-bottom: 10px; }
@@ -145,99 +165,222 @@ body { font-family: Arial, sans-serif; background-color: #f4f6f9; color: #333333
             
             <div class="actions-panel">
                 <button class="btn btn-red" onclick="openModal('modal-create-config')">+ Создать новую конфигурацию</button>
-                <button class="btn btn-blue" onclick="openModal('modal-version')">Журнал версий и аудит изменений</button>
+                <button class="btn btn-blue" onclick="openModal('modal-version')">Открыть архив изменений (Модальное окно)</button>
+            </div>
+
+            <div class="dashboard-grid">
+                <div class="dashboard-panel">
+                    <div class="panel-title">🎯 Назначение конфигурации и массовая раскатка</div>
+                    <form onsubmit="handleManualDeploy(event)" style="display: flex; gap: 15px; align-items: flex-end; flex-wrap: wrap;">
+                        <div style="flex: 1; min-width: 200px;">
+                            <label style="display:block; font-weight:bold; margin-bottom:4px;">1. Выберите конфигурацию:</label>
+                            <select id="deploy-file-select" class="input-field" required>
+                                <option value="" disabled selected>-- Выберите файл из доступных --</option>
+                                <option value="prod_retail_default.json">prod_retail_default.json (v2.45.0)</option>
+                                <option value="test_checkout_fast.json">test_checkout_fast.json (v1.12.2)</option>
+                                <option value="legacy_config_critical.json">legacy_config_critical.json (v1.10.1)</option>
+                            </select>
+                        </div>
+                        <div style="flex: 1; min-width: 200px;">
+                            <label style="display:block; font-weight:bold; margin-bottom:4px;">2. Целевая группа или хост КСО:</label>
+                            <select id="deploy-target-select" class="input-field" required>
+                                <option value="" disabled selected>-- Выберите область назначения --</option>
+                                <option value="Все кассы самообслуживания">Все кассы самообслуживания (Весь контур)</option>
+                                <option value="#ТестоваяГруппа_Эксперимент">#ТестоваяГруппа_Эксперимент</option>
+                                <option value="Терминал-176-ЕвроХим">Терминал-176-ЕвроХим (Локальный хост)</option>
+                                <option value="Новая точка (Чистая инсталляция)">Новая точка (Чистая инсталляция / Дефолт)</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-green" style="padding: 6px 20px; height: 27px;">🚀 Запустить раскатку</button>
+                    </form>
+                </div>
+
+                <div class="dashboard-panel">
+                    <div class="panel-title">⏱ Последние действия</div>
+                    <ul class="activity-list" id="activityLog">
+                        <li class="activity-item">
+                            🟢 Файл <b>prod_retail_default.json</b> успешно применен на <b>Группа: [Все КСО]</b>
+                            <span class="activity-time">Сегодня, 14:00 | Пользователь: Иванов П.В.</span>
+                        </li>
+                        <li class="activity-item">
+                            🔵 Инициирована раскатка <b>test_checkout_fast.json</b> на 2 тест-хоста.
+                            <span class="activity-time">Вчера, 18:11 | Пользователь: Сидоров К.М.</span>
+                        </li>
+                        <li class="activity-item">
+                            ⚪️ Новая станция <i>КСО-Дефолт-99</i> инициализирована (применен базовый образ после инсталляции).
+                            <span class="activity-time">24.05.2026 11:15 | Система</span>
+                        </li>
+                    </ul>
+                </div>
             </div>
 
             <div class="info-notice">
                 <span style="font-size: 16px;">💡</span>
                 <div>
-                    <b>Как работает раскатка:</b> Выберите нужную конфигурацию в таблице ниже, проверьте ключевые параметры по цветным тегам и нажмите кнопку <b>«Раскатить на целевые КСО»</b> в правой колонке. Файл запишется на КСО/хосты, указанные в столбце «Область действия».
+                    <b>Статусы систем:</b> В таблице ниже столбец <b>«Текущий статус на КСО»</b> отражает реальное положение дел на устройствах. Если КСО находится в состоянии после инсталляции без привязки манифеста, отображается нейтральный статус.
                 </div>
             </div>
             
             <div class="table-container">
-                <h3 style="color: #1d3557; margin: 0 0 10px 0; border-bottom: 1px solid #e2e8f0; padding-bottom: 5px;">Доступные конфигурации и управление раскаткой</h3>
-                <table class="grid-table">
-                    <thead>
-                        <tr>
-                            <th style="width: 220px;">Название файла конфигурации</th>
-                            <th style="width: 70px;">Версия</th>
-                            <th>Ключевые функциональные параметры (Свойства сборки)</th>
-                            <th style="width: 250px;">Область действия (Группы / Хосты)</th>
-                            <th style="width: 140px;">Дата изменения</th>
-                            <th style="width: 130px; text-align: center;">Действие</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>
-                                <b>prod_retail_default.json</b><br>
-                                <span class="text-muted">Основной рабочий шаблон розницы</span>
-                            </td>
-                            <td><span class="text-success">v2.45.0</span></td>
-                            <td>
-                                <span class="cfg-tag tag-success">✔ Печать чека: Да</span>
-                                <span class="cfg-tag tag-success">✔ Оплата DUET: Да</span>
-                                <span class="cfg-tag tag-success">✔ Проверка ЧЗ: Да</span>
-                                <span class="cfg-tag tag-neutral">Процессинг: Вкл</span>
-                                <span class="cfg-tag tag-neutral">18+: Верификация</span>
-                            </td>
-                            <td>
-                                <span style="font-weight: bold; color: #1d3557;">Группа: [Все кассы самообслуживания]</span><br>
-                                <span class="text-muted">Массовое распространение (весь контур)</span>
-                            </td>
-                            <td>26.05.2026 14:00</td>
-                            <td style="text-align: center;">
-                                <button class="btn btn-green btn-xs" onclick="deployConfig('prod_retail_default.json', 'Все кассы самообслуживания')">⚡ Раскатить на КСО</button>
-                            </td>
-                        </tr>
-                        
-                        <tr class="bg-grey">
-                            <td>
-                                <b>test_checkout_fast.json</b><br>
-                                <span class="text-muted">Тестовая экспресс-конфигурация</span>
-                            </td>
-                            <td><span>v1.12.2</span></td>
-                            <td>
-                                <span class="cfg-tag tag-danger">❌ Печать чека: Нет (Электронный)</span>
-                                <span class="cfg-tag tag-danger">❌ Оплата DUET: Нет</span>
-                                <span class="cfg-tag tag-success">✔ Проверка ЧЗ: Да</span>
-                                <span class="cfg-tag tag-neutral">Таймаут: 60с</span>
-                                <span class="cfg-tag tag-success">✔ Тест-оплата: Да</span>
-                            </td>
-                            <td>
-                                <span style="font-weight: bold; color: #457b9d;">Группа: [#ТестоваяГруппа_Эксперимент]</span><br>
-                                <span class="text-muted">Хосты: КСО-Тест-01, КСО-Тест-02</span>
-                            </td>
-                            <td>25.05.2026 18:11</td>
-                            <td style="text-align: center;">
-                                <button class="btn btn-green btn-xs" onclick="deployConfig('test_checkout_fast.json', '#ТестоваяГруппа_Эксперимент')">⚡ Раскатить на КСО</button>
-                            </td>
-                        </tr>
-                        
-                        <tr class="bg-warn">
-                            <td>
-                                <b>legacy_config_critical.json</b><br>
-                                <span style="color: #c53030; font-weight: bold;">⚠️ Legacy сборка (Локальная)</span>
-                            </td>
-                            <td><span style="text-decoration: underline;">v1.10.1</span></td>
-                            <td>
-                                <span class="cfg-tag tag-success">✔ Печать чека: Да</span>
-                                <span class="cfg-tag tag-danger">❌ Оплата DUET: Нет</span>
-                                <span class="cfg-tag tag-danger">❌ Проверка ЧЗ: Выкл</span>
-                                <span class="cfg-tag tag-neutral">Старая версия ядра</span>
-                            </td>
-                            <td>
-                                <span style="font-weight: bold; color: #e63946;">Отдельный хост: [Терминал-176-ЕвроХим]</span><br>
-                                <span class="text-muted">IP: 192.168.4.176 (КСО тип 2)</span>
-                            </td>
-                            <td>10.04.2025 09:30</td>
-                            <td style="text-align: center;">
-                                <button class="btn btn-red btn-xs" onclick="deployConfig('legacy_config_critical.json', 'Терминал-176-ЕвроХим')">⚡ Экстренная раскатка</button>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+                <div class="table-box">
+                    <h3 style="color: #1d3557; margin: 0 0 10px 0; border-bottom: 1px solid #e2e8f0; padding-bottom: 5px;">Доступные конфигурации и управление раскаткой</h3>
+                    <table class="grid-table">
+                        <thead>
+                            <tr>
+                                <th style="width: 200px;">Название файла конфигурации</th>
+                                <th style="width: 70px;">Версия</th>
+                                <th>Ключевые функциональные параметры (Свойства сборки)</th>
+                                <th style="width: 220px;">Область действия (Группы / Хосты)</th>
+                                <th style="width: 180px;">Текущий статус на КСО</th> <th style="width: 120px;">Дата изменения</th>
+                                <th style="width: 130px; text-align: center;">Действие</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <b>prod_retail_default.json</b><br>
+                                    <span class="text-muted">Основной рабочий шаблон розницы</span>
+                                </td>
+                                <td><span class="text-success">v2.45.0</span></td>
+                                <td>
+                                    <span class="cfg-tag tag-success">✔ Печать чека: Да</span>
+                                    <span class="cfg-tag tag-success">✔ Оплата DUET: Да</span>
+                                    <span class="cfg-tag tag-success">✔ Проверка ЧЗ: Да</span>
+                                    <span class="cfg-tag tag-neutral">Процессинг: Вкл</span>
+                                    <span class="cfg-tag tag-neutral">18+: Верификация</span>
+                                </td>
+                                <td>
+                                    <span style="font-weight: bold; color: #1d3557;">Группа: [Все КСО]</span><br>
+                                    <span class="text-muted">Массовое распространение</span>
+                                </td>
+                                <td>
+                                    <span class="status-badge status-active">● Активен (98/98 КСО)</span><br>
+                                    <span class="text-muted">Синхронизировано на всем контуре</span>
+                                </td>
+                                <td>26.05.2026 14:00</td>
+                                <td style="text-align: center;">
+                                    <button class="btn btn-green btn-xs" onclick="deployConfig('prod_retail_default.json', 'Все кассы самообслуживания')">⚡ Раскатить</button>
+                                </td>
+                            </tr>
+                            
+                            <tr class="bg-grey">
+                                <td>
+                                    <b>test_checkout_fast.json</b><br>
+                                    <span class="text-muted">Тестовая экспресс-конфигурация</span>
+                                </td>
+                                <td><span>v1.12.2</span></td>
+                                <td>
+                                    <span class="cfg-tag tag-danger">❌ Печать чека: Нет (Электронный)</span>
+                                    <span class="cfg-tag tag-danger">❌ Оплата DUET: Нет</span>
+                                    <span class="cfg-tag tag-success">✔ Проверка ЧЗ: Да</span>
+                                    <span class="cfg-tag tag-neutral">Таймаут: 60с</span>
+                                    <span class="cfg-tag tag-success">✔ Тест-оплата: Да</span>
+                                </td>
+                                <td>
+                                    <span style="font-weight: bold; color: #457b9d;">Группа: [#ТестоваяГруппа]</span><br>
+                                    <span class="text-muted">Хосты: КСО-Тест-01, КСО-Тест-02</span>
+                                </td>
+                                <td>
+                                    <span class="status-badge status-progress">⏳ Раскатка: 1 из 2 хостов</span><br>
+                                    <span class="text-muted">КСО-Тест-02 ожидает перезапуска</span>
+                                </td>
+                                <td>25.05.2026 18:11</td>
+                                <td style="text-align: center;">
+                                    <button class="btn btn-green btn-xs" onclick="deployConfig('test_checkout_fast.json', '#ТестоваяГруппа_Эксперимент')">⚡ Раскатить</button>
+                                </td>
+                            </tr>
+                            
+                            <tr class="bg-warn">
+                                <td>
+                                    <b>legacy_config_critical.json</b><br>
+                                    <span style="color: #c53030; font-weight: bold;">⚠️ Legacy сборка (Локальная)</span>
+                                </td>
+                                <td><span style="text-decoration: underline;">v1.10.1</span></td>
+                                <td>
+                                    <span class="cfg-tag tag-success">✔ Печать чека: Да</span>
+                                    <span class="cfg-tag tag-danger">❌ Оплата DUET: Нет</span>
+                                    <span class="cfg-tag tag-danger">❌ Проверка ЧЗ: Выкл</span>
+                                    <span class="cfg-tag tag-neutral">Старая версия ядра</span>
+                                </td>
+                                <td>
+                                    <span style="font-weight: bold; color: #e63946;">Хост: [Терминал-176-ЕвроХим]</span><br>
+                                    <span class="text-muted">IP: 192.168.4.176</span>
+                                </td>
+                                <td>
+                                    <span class="status-badge status-active">● Активен на хосте</span><br>
+                                    <span class="text-muted">Локальное исключение</span>
+                                </td>
+                                <td>10.04.2025 09:30</td>
+                                <td style="text-align: center;">
+                                    <button class="btn btn-red btn-xs" onclick="deployConfig('legacy_config_critical.json', 'Терминал-176-ЕвроХим')">⚡ Экстренная</button>
+                                </td>
+                            </tr>
+
+                            <tr class="bg-grey">
+                                <td>
+                                    <b>default_factory_fallback.json</b><br>
+                                    <span class="text-muted">Заводской образ / Инициализационный конфиг</span>
+                                </td>
+                                <td><span>v1.0.0</span></td>
+                                <td>
+                                    <span class="cfg-tag tag-neutral">Все функции по умолчанию</span>
+                                    <span class="cfg-tag tag-danger">❌ Оплата DUET: Выкл</span>
+                                    <span class="cfg-tag tag-danger">❌ Проверка ЧЗ: Выкл</span>
+                                </td>
+                                <td>
+                                    <span class="text-muted">Автоназначение после инсталляции</span>
+                                </td>
+                                <td>
+                                    <span class="status-badge status-empty">○ Станции на дефолте (3)</span><br>
+                                    <span class="text-muted">Ожидают привязки к группе</span>
+                                </td>
+                                <td>01.01.2025 00:00</td>
+                                <td style="text-align: center;">
+                                    <button class="btn btn-grey btn-xs" disabled style="cursor: not-allowed;">Базовый</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="table-box" style="margin-top: 15px;">
+                    <h3 style="color: #1d3557; margin: 0 0 10px 0; border-bottom: 1px solid #e2e8f0; padding-bottom: 5px;">📜 Расширенный аудит версий и коммитов манифеста</h3>
+                    <table class="grid-table" style="font-size: 11px;">
+                        <thead>
+                            <tr style="background: #f0f4f8;">
+                                <th style="width: 80px;">Версия</th>
+                                <th style="width: 120px;">Дата / Время</th>
+                                <th style="width: 150px;">Автор (Специалист)</th>
+                                <th>Изменения в параметрах и тегах</th>
+                                <th style="width: 100px; text-align: center;">Хэш манифеста</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><span class="text-success" style="font-weight: bold;">v2.45.0</span></td>
+                                <td>26.05.2026 14:00</td>
+                                <td><b>Иванов П.В.</b> (Администратор)</td>
+                                <td>Объединение кофейных категорий в каталоге, загружены новые иконки интерфейса, включена принудительная верификация маркировки Честного Знака для табачной продукции.</td>
+                                <td style="text-align: center; font-family: monospace; color: #718096;">4af28b1</td>
+                            </tr>
+                            <tr>
+                                <td><span style="font-weight: bold;">v1.12.2</span></td>
+                                <td>25.05.2026 18:11</td>
+                                <td><b>Сидоров К.М.</b> (IT-Спец)</td>
+                                <td>Добавлены жесткие таймауты корзины (60 секунд на сброс неактивной сессии), отключен флаг <code>pay_balance</code> для тестовой группы.</td>
+                                <td style="text-align: center; font-family: monospace; color: #718096;">8e11cd4</td>
+                            </tr>
+                            <tr>
+                                <td><span style="font-weight: bold;">v1.10.1</span></td>
+                                <td>10.04.2025 09:30</td>
+                                <td><b>Система (Импорт)</b></td>
+                                <td>Фиксация legacy-параметров ядра для совместимости со старыми релизами принтеров на отдельно стоящих терминалах ЕвроХим.</td>
+                                <td style="text-align: center; font-family: monospace; color: #718096;">00fa12c</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
             </div>
         </div>
     </div>
@@ -584,7 +727,6 @@ body { font-family: Arial, sans-serif; background-color: #f4f6f9; color: #333333
         document.getElementById(modalId).style.display = 'none';
     }
 
-    // Переключение вкладок в модальном окне
     function switchTab(evt, tabId) {
         var i, tabcontent, tablinks;
         tabcontent = document.getElementsByClassName("tab-content");
@@ -599,21 +741,45 @@ body { font-family: Arial, sans-serif; background-color: #f4f6f9; color: #333333
         evt.currentTarget.classList.add("active");
     }
 
-    // Имитация сохранения
     function saveNewConfig(event) {
         event.preventDefault();
         alert('Конфигурационный файл успешно валидирован и создан в системе!');
         closeModal('modal-create-config');
     }
 
-    // Информативная функция раскатки
     function deployConfig(fileName, targetZone) {
         const confirmation = confirm(`Внимание!\n\nВы собираетесь раскатить файл конфигурации: "${fileName}"\nНа область действия: "${targetZone}"\n\nПродолжить?`);
         if (confirmation) {
+            logActivity(`Инициирована ручная раскатка файла "${fileName}" на "${targetZone}".`, "🔵");
             alert(`Успешно! Конфигурация "${fileName}" была скомпилирована и отправлена на терминалы группы: "${targetZone}".`);
         }
     }
-</script>
 
+    // Логика обработки формы быстрой раскатки параметров
+    function handleManualDeploy(event) {
+        event.preventDefault();
+        const file = document.getElementById('deploy-file-select').value;
+        const target = document.getElementById('deploy-target-select').value;
+        
+        const confirmation = confirm(`Выполнить массовую раскатку?\nФайл: ${file}\nЦелевая зона: ${target}`);
+        if (confirmation) {
+            logActivity(`Запущено массовое развертывание ${file} на "${target}".`, "🟢");
+            alert(`Манифест отправлен в очередь релиза. Обновление группы "${target}" начнется автоматически.`);
+        }
+    }
+
+    // Динамическое добавление записей в блок «Последние действия»
+    function logActivity(text, statusEmoji) {
+        const log = document.getElementById('activityLog');
+        const now = new Date();
+        const timeString = now.toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' });
+        
+        const li = document.createElement('li');
+        li.className = 'activity-item';
+        li.innerHTML = `${statusEmoji} ${text} <span class="activity-time">Сегодня, ${timeString} | Текущая сессия</span>`;
+        
+        log.insertBefore(li, log.firstChild);
+    }
+</script>
 </body>
 </html>
