@@ -3,20 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <title>Модерация контента КСО - Аверс Технолоджи</title>
-    <script type="text/javascript" src="https://gc.kis.v2.scr.kaspersky-labs.com/FD126C42-EBFA-4E12-B309-BB3FDD723AC1/main.js?attr=lR464mimkLmh8BlOzucdMGNTkJ-eIj7bbpEA4SwRpSoiP-NCtozNFrbKKkFSYcA8CM8oIf3OFKI9G9Fi3XllN3U0AhMVaJgKID0AtWP9pBD3abMIVTag4UVXtantlInF55VOFtjkaBZ2yTeXKl2_RxqXwVkDTdX91Ky6ZYh81voTi6RQzJnOngEHGqZsVCtAL1_Ftwl1Y1SpsRL0c5OPsPiYnYY7BsQe-PAzpWUo3wbIjdiWF1qR6DReL48DzKXNzszeL3gUgb3kf0ztLPJ_AJcjVqRGvGFH_mziPk_6jHRN3pH2w7htD5B_8RHqj9Nj" charset="UTF-8"></script><style>
+    <style>
 * { box-sizing: border-box; }
 body { font-family: Arial, sans-serif; background-color: #f4f6f9; color: #333333; margin: 0; padding: 0; font-size: 12px; }
 .wrapper { display: flex; min-height: 100vh; }
-
-/* Стили модальных окон */
-.modal-overlay { 
-    display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
-    background: rgba(0,0,0,0.5); z-index: 1000; justify-content: center; align-items: center; 
-}
-.modal-content { 
-    background: #ffffff; padding: 20px; border: 1px solid #cccccc; width: 80%; max-width: 700px; 
-    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-}
 
 /* Боковое меню */
 .sidebar { 
@@ -49,58 +39,79 @@ body { font-family: Arial, sans-serif; background-color: #f4f6f9; color: #333333
 .main-content { flex-grow: 1; display: flex; flex-direction: column; overflow-x: hidden; }
 .top-navbar { background-color: #1d3557; color: #ffffff; padding: 10px 20px; height: 40px; font-size: 13px; font-weight: bold; display: flex; justify-content: space-between; align-items: center; }
 
-/* Фильтры и элементы */
-.filter-section { background-color: #ffffff; border-bottom: 1px solid #cccccc; padding: 15px; }
-.filter-grid { display: flex; gap: 15px; align-items: flex-end; }
-.filter-cell { flex: 1; }
-.filter-cell label { display: block; font-weight: bold; margin-bottom: 5px; }
-.input-field { width: 100%; padding: 6px; border: 1px solid #cccccc; background-color: #fafafa; font-size: 12px; }
-.actions-panel { background-color: #ffffff; padding: 10px 15px; border-bottom: 1px solid #e0e0e0; display: flex; flex-wrap: wrap; gap: 5px; }
+/* Фильтры списка заявок */
+.filter-section { background-color: #ffffff; border: 1px solid #cccccc; padding: 12px; margin-bottom: 15px; border-radius: 3px; }
+.filter-grid { display: flex; flex-wrap: wrap; gap: 10px; align-items: flex-end; }
+.filter-cell { flex: 1; min-width: 140px; }
+.filter-cell label { display: block; font-weight: bold; margin-bottom: 4px; color: #1d3557; }
+.input-field { width: 100%; padding: 5px; border: 1px solid #cccccc; background-color: #fafafa; font-size: 11px; border-radius: 2px; }
 
-.btn { padding: 6px 12px; font-size: 11px; font-weight: bold; cursor: pointer; border: 1px solid transparent; border-radius: 2px; text-decoration: none; display: inline-block; }
+/* Кнопки */
+.btn { padding: 5px 10px; font-size: 11px; font-weight: bold; cursor: pointer; border: 1px solid transparent; border-radius: 2px; text-decoration: none; display: inline-block; }
 .btn-red { background-color: #e63946; color: #ffffff; border-color: #d62828; }
 .btn-red:hover { background-color: #c92a36; }
 .btn-blue { background-color: #457b9d; color: #ffffff; border-color: #1d3557; }
 .btn-blue:hover { background-color: #386685; }
 .btn-green { background-color: #2ea043; color: #ffffff; border-color: #238636; }
 .btn-green:hover { background-color: #248235; }
+.btn-grey { background-color: #6c757d; color: #ffffff; border-color: #545b62; }
+.btn-grey:hover { background-color: #5a6268; }
 
-.update-box { background-color: #edf2f7; border: 1px solid #cbd5e0; border-left: 4px solid #457b9d; margin: 15px; padding: 15px; }
-.badge { display: inline-block; background-color: #ffffff; border: 1px solid #b0bec5; padding: 5px 10px; margin-right: 10px; font-weight: bold; }
-.badge span { color: #e63946; }
-
-.table-container { padding: 15px; flex-grow: 1; background: #ffffff; }
+/* Таблица */
 .grid-table { width: 100%; border-collapse: collapse; border: 1px solid #cccccc; background-color: #ffffff; }
 .grid-table th { background-color: #f8fafc; border: 1px solid #cccccc; padding: 8px; text-align: left; font-weight: bold; color: #1d3557; }
-.grid-table td { border: 1px solid #cccccc; padding: 8px; vertical-align: top; }
+.grid-table td { border: 1px solid #cccccc; padding: 8px; vertical-align: middle; }
+.grid-table tr:hover { background-color: #f1f5f9; }
 
-.menu-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 15px; padding: 15px; }
-.menu-card { background: #ffffff; border: 1px solid #cccccc; border-radius: 3px; padding: 10px; position: relative; }
-.menu-card-img { height: 90px; background: #eaedf1; display: flex; align-items: center; justify-content: center; font-size: 24px; margin-bottom: 8px; color: #78909c; border: 1px dashed #b0bec5; }
-.menu-card-title { font-weight: bold; font-size: 13px; margin-bottom: 5px; color: #0d2240; }
-.menu-card-meta { font-size: 11px; color: #666666; margin-bottom: 4px; }
+/* Отступы для кнопок в ячейке действий (Замечание 2) */
+.action-buttons { display: flex; flex-direction: column; gap: 6px; }
+
+/* Статусы */
+.status-badge { display: inline-block; padding: 3px 6px; font-weight: bold; border-radius: 2px; font-size: 10px; text-transform: uppercase; text-align: center; min-width: 95px; }
+.status-new { background-color: #e0f2fe; color: #0369a1; border: 1px solid #bae6fd; }
+.status-approved { background-color: #dcfce7; color: #15803d; border: 1px solid #bbf7d0; }
+.status-rejected { background-color: #fee2e2; color: #b91c1c; border: 1px solid #fecaca; }
+.status-pending { background-color: #fef9c3; color: #a16207; border: 1px solid #fef08a; }
 
 .two-col-layout { display: flex; gap: 20px; padding: 15px; }
 .layout-col { flex: 1; background: #ffffff; border: 1px solid #cccccc; padding: 15px; }
 .col-title { font-size: 13px; font-weight: bold; color: #1d3557; margin-bottom: 15px; border-bottom: 1px solid #e0e0e0; padding-bottom: 5px; }
-.form-group { margin-bottom: 12px; }
-.form-group label { display: block; font-weight: bold; margin-bottom: 4px; }
 
-.bg-grey { background-color: #eaedf1; }
-.bg-red { background-color: #ff4d4d !important; color: #ffffff !important; }
-.bg-red td { color: #ffffff !important; }
-.text-error { color: #e63946; font-weight: bold; }
-.text-success { color: #2ea043; font-weight: bold; }
-.text-warn { color: #d69e2e; font-weight: bold; }
+/* Временные метки */
+.time-stamp { font-family: monospace; font-size: 11px; color: #555555; white-space: nowrap; }
+.time-label { font-size: 9px; color: #888888; display: block; margin-bottom: 2px; }
+
+/* Комментарий к отказу (Замечание 3) */
+.reject-comment { margin-top: 4px; font-size: 10px; color: #b91c1c; background: #fff5f5; padding: 4px; border-left: 2px solid #ff4d4d; }
 
 .api-block { background: #2d3748; color: #a0aec0; font-family: Courier, monospace; padding: 10px; border-radius: 3px; margin-bottom: 10px; font-size: 11px; }
 .api-method { color: #38a169; font-weight: bold; margin-right: 5px; }
 .api-path { color: #e2e8f0; }
+
+/* Стили модального окна (Замечание 1) */
+.modal-overlay { 
+    display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
+    background: rgba(0,0,0,0.6); z-index: 1000; justify-content: center; align-items: center; 
+}
+.modal-content { 
+    background: #ffffff; padding: 20px; border: 1px solid #cccccc; width: 90%; max-width: 600px; 
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3); border-radius: 4px; position: relative;
+}
+.modal-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #e0e0e0; padding-bottom: 10px; margin-bottom: 15px; }
+.modal-title { font-size: 14px; font-weight: bold; color: #0d2240; }
+.close-modal-btn { background: none; border: none; font-size: 20px; cursor: pointer; color: #888888; }
+.close-modal-btn:hover { color: #333333; }
+.modal-body { display: flex; gap: 15px; margin-bottom: 15px; }
+.modal-preview-lg { width: 150px; height: 150px; background: #f8fafc; border: 1px dashed #b0bec5; display: flex; align-items: center; justify-content: center; font-size: 72px; border-radius: 4px; flex-shrink: 0; }
+.modal-info { flex-grow: 1; font-size: 12px; }
+.modal-footer { display: flex; justify-content: flex-end; gap: 10px; border-top: 1px solid #e0e0e0; padding-top: 15px; }
+.textarea-field { width: 100%; height: 50px; padding: 5px; border: 1px solid #cccccc; font-size: 11px; margin-top: 5px; resize: none; }
 </style>
 </head>
 <body>
     <div class="wrapper">
         
+        <!-- Боковое меню -->
         <div class="sidebar" id="sidebarMenu">
             <div class="sidebar-brand">
                 <span class="sidebar-brand-text">Аверс Технолоджи</span>
@@ -116,6 +127,7 @@ body { font-family: Arial, sans-serif; background-color: #f4f6f9; color: #333333
             </ul>
         </div>
     
+        <!-- Основной контент -->
         <div class="main-content">
             <div class="top-navbar">
                 <div>Раздел: Шлюз модерации медиа-контента и методы API</div>
@@ -123,27 +135,150 @@ body { font-family: Arial, sans-serif; background-color: #f4f6f9; color: #333333
             </div>
 
             <div class="two-col-layout">
-                <div class="layout-col" style="flex: 1.3;">
-                    <div class="col-title" style="color: #e63946;">Модерация измененного контента на объектах</div>
-                    <p style="font-size: 11px; color: #555; margin-bottom: 10px;"><i>Файлы изолированы: Изображения скрыты до установки флага модератором.</i></p>
-                    <table class="grid-table" style="font-size: 11px;">
+                <!-- Панель модерации заявок -->
+                <div class="layout-col" style="flex: 1.8;">
+                    <div class="col-title" style="color: #e63946;">Очередь заявок на модерацию медиа-контента</div>
+                    
+                    <!-- Блок фильтрации -->
+                    <div class="filter-section">
+                        <div class="filter-grid">
+                            <div class="filter-cell">
+                                <label for="filterStatus">Статус заявки</label>
+                                <select id="filterStatus" class="input-field" onchange="applyFilters()">
+                                    <option value="all">Все статусы</option>
+                                    <option value="new">Новая (В очереди)</option>
+                                    <option value="pending">На утверждении</option>
+                                    <option value="approved">Одобрено</option>
+                                    <option value="rejected">Отклонено</option>
+                                </select>
+                            </div>
+                            <div class="filter-cell">
+                                <label for="filterObject">Объект / КСО</label>
+                                <input type="text" id="filterObject" class="input-field" placeholder="Напр. GAZ1, NRK2" oninput="applyFilters()">
+                            </div>
+                            <div class="filter-cell">
+                                <label for="filterSearch">Поиск по товару</label>
+                                <input type="text" id="filterSearch" class="input-field" placeholder="ID или название..." oninput="applyFilters()">
+                            </div>
+                            <div class="filter-cell" style="flex: 0; min-width: auto;">
+                                <button class="btn btn-grey" onclick="resetFilters()">Сбросить</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Таблица заявок -->
+                    <table class="grid-table" id="moderationTable" style="font-size: 11px;">
                         <thead>
-                            <tr><th>Объект/Товар</th><th>Изменение</th><th>Превью</th><th>Действие</th></tr>
+                            <tr>
+                                <th style="width: 80px;">Статус</th>
+                                <th style="width: 170px;">Объект / Товар</th>
+                                <th>Суть изменения</th>
+                                <th style="width: 60px; text-align: center;">Превью</th>
+                                <th style="width: 130px;">Временные метки</th>
+                                <th style="width: 120px;">Действие</th>
+                            </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td><b>Товар ID 4402</b><br>Лимонад Классический</td>
-                                <td>Загружено новое фото товара с объекта КСО GAZ1</td>
-                                <td><span style="font-size:20px;">🍹</span></td>
+                            <!-- Заявка 1 (Новая) -->
+                            <tr id="row-4402" data-status="new" data-object="GAZ1" data-item="4402 лимонад классический">
+                                <td><span class="status-badge status-new">Новая</span></td>
                                 <td>
-                                    <button class="btn btn-green" style="padding: 2px 6px;" onclick="alert('Утверждено!')">Утвердить</button>
-                                    <button class="btn btn-red" style="padding: 2px 6px;" onclick="alert('Отклонено')">Отклонить</button>
+                                    <span style="color:#718096; font-weight:bold;">[GAZ1] Газпромнефть</span><br>
+                                    <b>Товар ID 4402</b><br>Лимонад Классический
+                                </td>
+                                <td>Загружено новое фото товара сотрудником на объекте. Ожидает проверки.</td>
+                                <td style="text-align: center;"><span style="font-size:22px; cursor:pointer;" onclick="openModerationModal('row-4402', '🍹')">🍹</span></td>
+                                <td>
+                                    <span class="time-label">Создана:</span>
+                                    <span class="time-stamp">28.05.2026 11:15:22</span>
+                                    <span class="time-label" style="margin-top:4px;">Изменена:</span>
+                                    <span class="time-stamp">-</span>
+                                    <div class="comment-container"></div>
+                                </td>
+                                <td>
+                                    <!-- Замечание 2: Обернуто в flex c gap -->
+                                    <div class="action-buttons">
+                                        <button class="btn btn-blue" style="padding: 2px 6px;" onclick="openModerationModal('row-4402', '🍹')">Открыть</button>
+                                        <button class="btn btn-green" style="padding: 2px 6px;" onclick="updateStatus('row-4402', 'approved')">Утвердить</button>
+                                        <button class="btn btn-red" style="padding: 2px 6px;" onclick="promptReject('row-4402')">Отклонить</button>
+                                    </div>
+                                </td>
+                            </tr>
+                            
+                            <!-- Заявка 2 (На утверждении) -->
+                            <tr id="row-1089" data-status="pending" data-object="NRK2" data-item="1089 выпечка круассан">
+                                <td><span class="status-badge status-pending">На утверждении</span></td>
+                                <td>
+                                    <span style="color:#718096; font-weight:bold;">[NRK2] Норильский Никель</span><br>
+                                    <b>Товар ID 1089</b><br>Круассан с шоколадом
+                                </td>
+                                <td>Обновлено изображение товарной группы "Выпечка собственного производства". Отправлено на доп. валидацию бренд-менеджеру.</td>
+                                <td style="text-align: center;"><span style="font-size:22px; cursor:pointer;" onclick="openModerationModal('row-1089', '🥐')">🥐</span></td>
+                                <td>
+                                    <span class="time-label">Создана:</span>
+                                    <span class="time-stamp">27.05.2026 16:40:00</span>
+                                    <span class="time-label" style="margin-top:4px;">Изменена:</span>
+                                    <span class="time-stamp">28.05.2026 09:30:15</span>
+                                    <div class="comment-container"></div>
+                                </td>
+                                <td>
+                                    <div class="action-buttons">
+                                        <button class="btn btn-blue" style="padding: 2px 6px;" onclick="openModerationModal('row-1089', '🥐')">Открыть</button>
+                                        <button class="btn btn-green" style="padding: 2px 6px;" onclick="updateStatus('row-1089', 'approved')">Утвердить</button>
+                                        <button class="btn btn-red" style="padding: 2px 6px;" onclick="promptReject('row-1089')">Отклонить</button>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <!-- Заявка 3 (Одобрено) -->
+                            <tr id="row-5110" data-status="approved" data-object="GAZ3" data-item="5110 кофе американо">
+                                <td><span class="status-badge status-approved">Одобрено</span></td>
+                                <td>
+                                    <span style="color:#718096; font-weight:bold;">[GAZ3] Газпромнефть</span><br>
+                                    <b>Товар ID 5110</b><br>Кофе Американо 0.3
+                                </td>
+                                <td>Замена размытого фото на качественный рендер из ЦБД. Флаг видимости на кассах активирован.</td>
+                                <td style="text-align: center;"><span style="font-size:22px;">☕</span></td>
+                                <td>
+                                    <span class="time-label">Создана:</span>
+                                    <span class="time-stamp">28.05.2026 08:12:04</span>
+                                    <span class="time-label" style="margin-top:4px;">Изменена:</span>
+                                    <span class="time-stamp">28.05.2026 10:05:43</span>
+                                    <div class="comment-container"></div>
+                                </td>
+                                <td>
+                                    <span style="color: #2ea043; font-weight: bold;">Применено</span>
+                                </td>
+                            </tr>
+
+                            <!-- Заявка 4 (Отклонено с комментарием) -->
+                            <tr id="row-7701" data-status="rejected" data-object="NRK1" data-item="7701 сигареты табак">
+                                <td><span class="status-badge status-rejected">Отклонено</span></td>
+                                <td>
+                                    <span style="color:#718096; font-weight:bold;">[NRK1] Норильский Никель</span><br>
+                                    <b>Группа ID 7701</b><br>Табачная продукция
+                                </td>
+                                <td>Попытка загрузить некорректный баннер для закрытого бокса табака.</td>
+                                <td style="text-align: center;"><span style="font-size:22px;">🚭</span></td>
+                                <td>
+                                    <span class="time-label">Создана:</span>
+                                    <span class="time-stamp">26.05.2026 12:00:11</span>
+                                    <span class="time-label" style="margin-top:4px;">Изменена:</span>
+                                    <span class="time-stamp">26.05.2026 14:22:19</span>
+                                    <!-- Замечание 3: Блок комментария выводится под датами -->
+                                    <div class="comment-container">
+                                        <div class="reject-comment">Причина: Нарушение требований ФЗ-15 по рекламе табака.</div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <span style="color: #e63946; font-weight: bold;">Заблокировано</span>
                                 </td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
                 
+                <!-- Правая колонка с методами API -->
                 <div class="layout-col">
                     <div class="col-title">Интеграционные методы API (Локальные данные &rarr; ЦБД)</div>
                     <div class="api-block">
@@ -152,21 +287,53 @@ body { font-family: Arial, sans-serif; background-color: #f4f6f9; color: #333333
                     </div>
                     <div class="api-block">
                         <span class="api-method">PUT</span><span class="api-path">/api/v1/moderation/set-visible-flag</span>
-                        <div style="margin-top:5px; color: #718096;">Активация флага отображения контента.</div>
+                        <div style="margin-top:5px; color: #718096;">Активация флага отображения контента и запись комментария отказа.</div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
+    <!-- МОДАЛЬНОЕ ОКНО ДЕТАЛЬНОГО ПРОСМОТРА (Замечание 1) -->
+    <div id="moderationModal" class="modal-overlay">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title" id="m-title">Детальный просмотр заявки</div>
+                <button class="close-modal-btn" onclick="closeModerationModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <!-- Большая картинка (в прототипе - увеличенный Emoji-рендер) -->
+                <div class="modal-preview-lg" id="m-image">📸</div>
+                <div class="modal-info">
+                    <p style="margin-top:0;"><b id="m-object"></b></p>
+                    <p><b id="m-item-name"></b></p>
+                    <p id="m-desc" style="color: #555;"></p>
+                    <p style="font-size:11px; color:#888;">Получено: <span id="m-date"></span></p>
+                    
+                    <!-- Текстовое поле для комментария (Замечание 3) -->
+                    <div style="margin-top: 15px;">
+                        <label style="font-weight:bold; display:block;">Комментарий к решению (обязателен при отклонении):</label>
+                        <textarea id="modalComment" class="textarea-field" placeholder="Укажите причину в случае отклонения..."></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-green" onclick="handleModalAction('approved')">Одобрить контент</button>
+                <button class="btn btn-red" onclick="handleModalAction('rejected')">Отклонить с комментарием</button>
+                <button class="btn btn-grey" onclick="closeModerationModal()">Закрыть</button>
+            </div>
+        </div>
+    </div>
     
 <script>
+    let currentActiveRowId = null;
+
     function toggleSidebar() {
         var sidebar = document.getElementById('sidebarMenu');
         sidebar.classList.toggle('collapsed');
         localStorage.setItem('sidebarCollapsed', sidebar.classList.contains('collapsed'));
     }
     
-    // Восстановление состояния сайдбара при загрузке страницы
     document.addEventListener("DOMContentLoaded", function() {
         var isCollapsed = localStorage.getItem('sidebarCollapsed') === 'true';
         var sidebar = document.getElementById('sidebarMenu');
@@ -175,13 +342,124 @@ body { font-family: Arial, sans-serif; background-color: #f4f6f9; color: #333333
         }
     });
 
-    function openModal(modalId) {
-        document.getElementById(modalId).style.display = 'flex';
+    // Фильтрация строк таблицы
+    function applyFilters() {
+        var statusValue = document.getElementById('filterStatus').value;
+        var objectValue = document.getElementById('filterObject').value.toLowerCase().trim();
+        var searchValue = document.getElementById('filterSearch').value.toLowerCase().trim();
+        
+        var rows = document.querySelectorAll('#moderationTable tbody tr');
+        
+        rows.forEach(function(row) {
+            var rowStatus = row.getAttribute('data-status');
+            var rowObject = row.getAttribute('data-object').toLowerCase();
+            var rowItem = row.getAttribute('data-item').toLowerCase();
+            
+            var matchesStatus = (statusValue === 'all' || rowStatus === statusValue);
+            var matchesObject = (objectValue === '' || rowObject.includes(objectValue));
+            var matchesSearch = (searchValue === '' || rowItem.includes(searchValue));
+            
+            if (matchesStatus && matchesObject && matchesSearch) {
+                row.style.display = '';
+            } else {
+                row.style.display = 'none';
+            }
+        });
     }
-    function closeModal(modalId) {
-        document.getElementById(modalId).style.display = 'none';
+
+    function resetFilters() {
+        document.getElementById('filterStatus').value = 'all';
+        document.getElementById('filterObject').value = '';
+        document.getElementById('filterSearch').value = '';
+        applyFilters();
+    }
+
+    // Открытие модального окна и парсинг данных из строки таблицы (Замечание 1)
+    function openModerationModal(rowId, emojiImg) {
+        currentActiveRowId = rowId;
+        const row = document.getElementById(rowId);
+        
+        // Сбор информации из верстки
+        const objectText = row.cells[1].querySelector('span').textContent;
+        const itemText = row.cells[1].querySelector('b').textContent + ' ' + row.cells[1].childNodes[4].textContent.trim();
+        const descText = row.cells[2].textContent;
+        const dateText = row.cells[4].querySelector('.time-stamp').textContent;
+
+        // Наполнение модалки
+        document.getElementById('m-object').textContent = objectText;
+        document.getElementById('m-item-name').textContent = itemText;
+        document.getElementById('m-desc').textContent = descText;
+        document.getElementById('m-date').textContent = dateText;
+        document.getElementById('m-image').textContent = emojiImg;
+        document.getElementById('modalComment').value = ''; // Сброс комментария
+        
+        document.getElementById('moderationModal').style.display = 'flex';
+    }
+
+    function closeModerationModal() {
+        document.getElementById('moderationModal').style.display = 'none';
+        currentActiveRowId = null;
+    }
+
+    // Обработка действий внутри модального окна (Замечание 1)
+    function handleModalAction(status) {
+        const comment = document.getElementById('modalComment').value.trim();
+        
+        if (status === 'rejected' && !comment) {
+            alert('Пожалуйста, укажите комментарий с причиной отклонения заявки.');
+            return;
+        }
+
+        updateStatus(currentActiveRowId, status, comment);
+        closeModerationModal();
+    }
+
+    // Быстрый вызов отклонения из общей таблицы (Замечание 3)
+    function promptReject(rowId) {
+        const reason = prompt('Укажите причину отклонения контента:');
+        if (reason === null) return; // Нажата отмена
+        if (reason.trim() === '') {
+            alert('Причина отклонения не может быть пустой.');
+            return;
+        }
+        updateStatus(rowId, 'rejected', reason.trim());
+    }
+
+    // Единая функция обновления статуса
+    function updateStatus(rowId, nextStatus, commentText = '') {
+        const row = document.getElementById(rowId);
+        if (!row) return;
+
+        const badge = row.querySelector('.status-badge');
+        const actionCell = row.cells[5];
+        const timeStamps = row.querySelectorAll('.time-stamp');
+        const commentContainer = row.querySelector('.comment-container');
+        
+        const now = new Date();
+        const formattedDate = now.toLocaleDateString('ru-RU') + ' ' + now.toLocaleTimeString('ru-RU');
+
+        // Меняем статус и стили
+        row.setAttribute('data-status', nextStatus);
+        badge.className = 'status-badge status-' + nextStatus;
+        
+        // Запись времени изменения (Пункт 4)
+        if(timeStamps.length > 1) {
+            timeStamps[1].textContent = formattedDate;
+        }
+
+        // Вывод комментария (Замечание 3)
+        if (nextStatus === 'rejected' && commentText) {
+            badge.textContent = 'Отклонено';
+            commentContainer.innerHTML = `<div class="reject-comment">Причина: ${commentText}</div>`;
+            actionCell.innerHTML = '<span style="color: #e63946; font-weight: bold;">Отклонено</span>';
+        } else if (nextStatus === 'approved') {
+            badge.textContent = 'Одобрено';
+            commentContainer.innerHTML = ''; // Очищаем комментарии если были
+            actionCell.innerHTML = '<span style="color: #2ea043; font-weight: bold;">Применено</span>';
+        }
+        
+        setTimeout(applyFilters, 600);
     }
 </script>
-
 </body>
 </html>
